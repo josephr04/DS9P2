@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Top App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="2dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingHorizontal="16dp">
+
+            <!-- Logo / Brand -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_briefcase"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="NewWays"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Avatar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_person"
+                    app:civ_border_color="@color/border"
+                    app:civ_border_width="1dp" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Page Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completa tu Perfil"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Por favor, proporciona tus datos generales para comenzar tu proceso de aplicación."
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- ===== SECCIÓN: Información Personal ===== -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_person"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Información Personal"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Primer Nombre -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Primer Nombre *" />
+                    <EditText
+                        android:id="@+id/etPrimerNombre"
+                        style="@style/InputField"
+                        android:hint=""
+                        android:inputType="textPersonName" />
+
+                    <!-- Segundo Nombre -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Segundo Nombre (Opcional)" />
+                    <EditText
+                        android:id="@+id/etSegundoNombre"
+                        style="@style/InputField"
+                        android:inputType="textPersonName" />
+
+                    <!-- Primer Apellido -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Primer Apellido *" />
+                    <EditText
+                        android:id="@+id/etPrimerApellido"
+                        style="@style/InputField"
+                        android:inputType="textPersonName" />
+
+                    <!-- Segundo Apellido -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Segundo Apellido (Opcional)" />
+                    <EditText
+                        android:id="@+id/etSegundoApellido"
+                        style="@style/InputField"
+                        android:inputType="textPersonName" />
+
+                    <!-- Cédula Panameña -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Cédula Panameña *" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/etCedulaProvincia"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_input_field"
+                            android:gravity="center"
+                            android:hint="00"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:paddingHorizontal="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="18sp"
+                            android:layout_marginHorizontal="4dp" />
+
+                        <EditText
+                            android:id="@+id/etCedulaTomo"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/bg_input_field"
+                            android:gravity="center"
+                            android:hint="0000"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:paddingHorizontal="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="18sp"
+                            android:layout_marginHorizontal="4dp" />
+
+                        <EditText
+                            android:id="@+id/etCedulaAsiento"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="3"
+                            android:background="@drawable/bg_input_field"
+                            android:gravity="center"
+                            android:hint="00000"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:paddingHorizontal="8dp" />
+                    </LinearLayout>
+
+                    <!-- Género -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Género *" />
+                    <Spinner
+                        android:id="@+id/spinnerGenero"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione"/>
+
+                    <!-- Fecha de Nacimiento -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Fecha de Nacimiento *" />
+                    <EditText
+                        android:id="@+id/etFechaNacimiento"
+                        style="@style/InputField"
+                        android:hint="mm/dd/yyyy"
+                        android:inputType="date"
+                        android:focusable="false"
+                        android:clickable="true" />
+
+                    <!-- Estado Civil -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Estado Civil *" />
+                    <Spinner
+                        android:id="@+id/spinnerEstadoCivil"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                    <!-- Tipo de Sangre -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Tipo de Sangre *" />
+                    <Spinner
+                        android:id="@+id/spinnerTipoSangre"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                    <!-- Nivel Académico -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Nivel Académico *" />
+                    <Spinner
+                        android:id="@+id/spinnerNivelAcademico"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ===== SECCIÓN: Información de Contacto ===== -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_contact"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Información de Contacto"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Teléfono Primario -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Teléfono Primario (Opcional)" />
+                    <EditText
+                        android:id="@+id/etTelefonoPrimario"
+                        style="@style/InputField"
+                        android:hint="000-0000"
+                        android:inputType="phone" />
+
+                    <!-- Teléfono Secundario -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Teléfono Secundario (Opcional)" />
+                    <EditText
+                        android:id="@+id/etTelefonoSecundario"
+                        style="@style/InputField"
+                        android:inputType="phone" />
+
+                    <!-- Celular Primario -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Celular Primario *" />
+                    <EditText
+                        android:id="@+id/etCelularPrimario"
+                        style="@style/InputField"
+                        android:hint="6000-0000"
+                        android:inputType="phone" />
+
+                    <!-- Celular Secundario -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Celular Secundario (Opcional)" />
+                    <EditText
+                        android:id="@+id/etCelularSecundario"
+                        style="@style/InputField"
+                        android:inputType="phone" />
+
+                    <!-- Correo Electrónico -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Correo Electrónico *" />
+                    <EditText
+                        android:id="@+id/etCorreo"
+                        style="@style/InputField"
+                        android:hint="usuario@ejemplo.com"
+                        android:inputType="textEmailAddress" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ===== SECCIÓN: Dirección Residencial ===== -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_location"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Dirección Residencial"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Provincia -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Provincia *" />
+                    <Spinner
+                        android:id="@+id/spinnerProvincia"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                    <!-- Distrito -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Distrito *" />
+                    <Spinner
+                        android:id="@+id/spinnerDistrito"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                    <!-- Corregimiento -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Corregimiento *" />
+                    <Spinner
+                        android:id="@+id/spinnerCorregimiento"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione" />
+
+                    <!-- Urbanización/Barriada -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Urbanización/Barriada *" />
+                    <EditText
+                        android:id="@+id/etUrbanizacion"
+                        style="@style/InputField"
+                        android:inputType="textPostalAddress" />
+
+                    <!-- Calle -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Calle *" />
+                    <EditText
+                        android:id="@+id/etCalle"
+                        style="@style/InputField"
+                        android:inputType="textPostalAddress" />
+
+                    <!-- Casa/Edificio -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Casa/Edificio # *" />
+                    <EditText
+                        android:id="@+id/etCasaEdificio"
+                        style="@style/InputField"
+                        android:inputType="text" />
+
+                    <!-- Detalles Adicionales -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Detalles Adicionales (Opcional)" />
+                    <EditText
+                        android:id="@+id/etDetallesAdicionales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/bg_input_field"
+                        android:gravity="top|start"
+                        android:hint="Ej: Detrás de la tienda X, portón azul..."
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:maxLines="5"
+                        android:padding="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ===== SECCIÓN: Aplicación Laboral ===== -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_work"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Aplicación Laboral"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Vacante -->
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:text="Vacante a la que aplica *" />
+                    <Spinner
+                        android:id="@+id/spinnerVacante"
+                        style="@style/SpinnerField"
+                        android:prompt="@string/spinner_seleccione_posicion" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Botón Enviar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnviarSolicitud"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
+                android:text="Enviar Solicitud"
+                android:textColor="@color/surface"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="10dp"
+                app:elevation="2dp" />
+
+            <!-- Footer: datos protegidos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_lock"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Tus datos están protegidos bajo nuestras políticas."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavPostulante"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        app:menu="@menu/menu_bottom_nav_postulante"
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"
+        app:elevation="8dp"
+        app:labelVisibilityMode="labeled" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

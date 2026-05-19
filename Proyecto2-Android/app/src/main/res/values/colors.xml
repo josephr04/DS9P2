@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#1A56DB</color>
+    <color name="primary_dark">#1342B0</color>
+    <color name="background">#F0F2F8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="error">#EF4444</color>
+    <color name="error_bg">#FEE2E2</color>
+    <color name="border">#E5E7EB</color>
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/bg_stat_icon_blue.xml  — use for Total Applicants -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#EFF6FF" />
+    <corners android:radius="10dp" />
+</shape>
+
+    <!-- ─────────────────────────────────────────────────────────────
+         Paste each block below into its own file:
+
+         bg_stat_icon_green.xml  — Total Documents
+         ──────────────────────────────────────────
+         <shape xmlns:android="http://schemas.android.com/apk/res/android"
+             android:shape="rectangle">
+             <solid android:color="#F0FDF4" />
+             <corners android:radius="10dp" />
+         </shape>
+
+         bg_stat_icon_gray.xml  — Postulantes Hoy
+         ──────────────────────────────────────────
+         <shape xmlns:android="http://schemas.android.com/apk/res/android"
+             android:shape="rectangle">
+             <solid android:color="#F3F4F6" />
+             <corners android:radius="10dp" />
+         </shape>
+
+         bg_stat_icon_red.xml  — Total Vacantes
+         ──────────────────────────────────────────
+         <shape xmlns:android="http://schemas.android.com/apk/res/android"
+             android:shape="rectangle">
+             <solid android:color="#FEF2F2" />
+             <corners android:radius="10dp" />
+         </shape>
+    ──────────────────────────────────────────────────────────────── -->

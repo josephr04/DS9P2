@@ -1,3 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Proyecto2-Android</string>
+    <string name="app_name">NewWays</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="username_hint">Ingresa tu nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="password_hint">Ingresa tu contraseña</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="email_hint">Ingresa tu correo electrónico</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="confirm_password_hint">Confirma tu contraseña</string>
+    <string name="btn_login">Iniciar Sesión</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="no_account">¿No tienes una cuenta?</string>
+    <string name="sign_up_now">Regístrate aquí</string>
+    <string name="have_account">¿Ya tienes una cuenta?</string>
+    <string name="login_here">Inicia sesión aquí</string>
+    <string name="error_credentials">Nombre de usuario o contraseña incorrectos.</string>
+    <string name="footer_copy">© 2024 NewWays Institucional. Todos los derechos reservados.</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="terms">Términos de Servicio</string>
+    <string name="help">Centro de Ayuda</string>
+    <string name="save">Guardar Cambios</string>
+    <string name="cancel">Cancelar</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="documents">Documentos</string>
+    <string name="profile">Perfil</string>
+    <string name="settings">Configuración</string>
+    <string name="dashboard">Panel Principal</string>
+    <string name="applicants">Postulantes</string>
+    <string name="error_empty_fields">Por favor completa todos los campos.</string>
+    <string name="error_passwords_match">Las contraseñas no coinciden.</string>
+    <string name="error_email_invalid">Ingresa un correo electrónico válido.</string>
+    <string name="error_username_short">El nombre de usuario debe tener al menos 6 caracteres.</string>
+
+    <string name="spinner_seleccione">Seleccione...</string>
+    <string name="spinner_seleccione_posicion">Seleccione una posición...</string>
 </resources>
