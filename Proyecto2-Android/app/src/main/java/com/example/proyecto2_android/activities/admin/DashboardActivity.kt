@@ -1,15 +1,17 @@
 package com.example.proyecto2_android.activities.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.proyecto2_android.R
 import com.example.proyecto2_android.adapters.CandidatoAdapter
 import com.example.proyecto2_android.models.Candidato
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.recyclerview.widget.RecyclerView
-import android.widget.TextView
+import com.example.proyecto2_android.activities.AjustesActivity
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -23,47 +25,61 @@ class DashboardActivity : AppCompatActivity() {
 
         rvCandidatos = findViewById(R.id.rvCandidatosRecientes)
         tvVerTodos   = findViewById(R.id.tvVerTodos)
-        bottomNav    = findViewById(R.id.bottomNavAdmin)
+        bottomNav    = findViewById(R.id.bottomNavAjustes)
 
         setupRecyclerView()
         setupBottomNav()
 
         tvVerTodos.setOnClickListener {
-            // TODO: navegar a lista completa de postulantes
+            // Ir a la pantalla de postulantes completa
+            val intent = Intent(this, PostulantesActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 
     private fun setupRecyclerView() {
-        // Datos de ejemplo — reemplaza con tu fuente real
         val candidatos = listOf(
             Candidato("Ana García Méndez",  "Senior Software Engineer", "Oct 12, 2023"),
             Candidato("Carlos Ruiz Zepeda", "Project Manager",          "Oct 10, 2023"),
             Candidato("Roberto Valdez",     "UX Designer",              "Oct 09, 2023")
         )
-
         rvCandidatos.layoutManager = LinearLayoutManager(this)
         rvCandidatos.adapter = CandidatoAdapter(candidatos) { candidato ->
-            // TODO: abrir detalle del candidato
+            // Aquí puedes abrir el detalle del candidato
+            android.widget.Toast.makeText(this, "Ver detalle de: ${candidato.nombre}", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setupBottomNav() {
-        // Marca Dashboard como seleccionado al entrar
         bottomNav.selectedItemId = R.id.nav_dashboard
 
         bottomNav.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.nav_dashboard    -> true   // ya estamos aquí
-                R.id.nav_postulantes  -> {
-                    // TODO: navegar a PostulantesActivity
+                R.id.nav_dashboard -> true
+                R.id.nav_postulantes -> {
+                    // Iniciar PostulantesActivity
+                    val intent = Intent(this, PostulantesActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
                     true
                 }
-                R.id.nav_ajustes      -> {
-                    // TODO: navegar a AjustesActivity
+                R.id.nav_ajustes -> {
+                    val intent = Intent(this, AjustesActivity::class.java)
+                    intent.putExtra("origen", "admin")
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bottomNav.selectedItemId = R.id.nav_dashboard
     }
 }

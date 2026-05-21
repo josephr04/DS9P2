@@ -2,9 +2,9 @@ package com.example.proyecto2_android.models
 
 import java.io.Serializable
 
-data class Candidato(
+data class DocumentoCandidato(
     val nombre: String,
-    val posicion: String,
-    val fechaAplicacion: String,
-    val avatarResId: Int? = null
+    val fecha: String,
+    val tamaño: String,
+    val icono: Int
 ) : Serializable

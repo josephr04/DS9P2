@@ -599,6 +599,10 @@
         app:itemIconTint="@color/selector_bottom_nav"
         app:itemTextColor="@color/selector_bottom_nav"
         app:elevation="8dp"
-        app:labelVisibilityMode="labeled" />
+        app:itemIconSize="24dp"
+        android:paddingTop="8dp"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/BottomNavTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavTextAppearance" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

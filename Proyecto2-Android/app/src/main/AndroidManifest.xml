@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyecto2Android">
 
+        <!-- Login Activity (LAUNCHER) -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -21,13 +22,44 @@
             </intent-filter>
         </activity>
 
+        <!-- Admin Activities -->
         <activity
             android:name=".activities.admin.DashboardActivity"
             android:exported="false" />
 
         <activity
+            android:name=".activities.admin.PostulantesActivity"
+            android:exported="false" />
+
+        <!-- Postulante Activities -->
+        <activity
             android:name=".activities.postulante.PerfilActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.postulante.DocumentosActivity"
+            android:exported="false" />
+
+        <!-- Ajustes Activity -->
+        <activity
+            android:name=".activities.AjustesActivity"
+            android:exported="false" />
+
+        <!-- Cambiar Contraseña, Usuario y Correo Activities -->
+        <activity
+            android:name=".activities.postulante.CambiarContrasenaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.postulante.CambiarUsuarioActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.postulante.CambiarCorreoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.admin.PerfilCandidatoActivity" />
 
     </application>
 
