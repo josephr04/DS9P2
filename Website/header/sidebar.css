@@ -1,0 +1,378 @@
+/* ==================== VARIABLES Y ESTILOS GLOBALES SIDEBAR ==================== */
+:root {
+    --sidebar-bg-start: #0c4ed4;
+    --sidebar-bg-end: #0a3fb0;
+    --sidebar-width: 280px;
+    --sidebar-text: #ffffff;
+    --sidebar-hover: rgba(255, 255, 255, 0.15);
+    --sidebar-active-border: #ffffff;
+    --danger-color: #dc3545;
+}
+
+/* ==================== SIDEBAR DESKTOP (STICKY) ==================== */
+.sidebar-desktop {
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+    color: var(--sidebar-text);
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.sidebar-desktop::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-desktop::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-desktop::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar-desktop::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==================== CONTENIDO DEL SIDEBAR ==================== */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+}
+
+/* ==================== HEADER DEL SIDEBAR (LOGO) ==================== */
+.sidebar-header {
+    padding: 1.8rem 1.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.sidebar-header h5 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    white-space: nowrap;
+}
+
+.sidebar-header i {
+    font-size: 1.8rem;
+    opacity: 0.95;
+}
+
+/* ==================== MENÚ DEL SIDEBAR ==================== */
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+.sidebar-link:hover {
+    background-color: var(--sidebar-hover);
+    padding-left: 1.8rem;
+}
+
+.sidebar-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left-color: var(--sidebar-active-border);
+    font-weight: 600;
+}
+
+.sidebar-link i {
+    font-size: 1.3rem;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-link:hover i {
+    transform: scale(1.15);
+}
+
+.sidebar-link span {
+    transition: all 0.3s ease;
+}
+
+/* ==================== SEPARADOR ==================== */
+.sidebar-divider {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0.7;
+}
+
+/* ==================== BOTÓN LOGOUT ==================== */
+.sidebar-link.logout {
+    color: #ffcccc;
+    margin-top: auto;
+}
+
+.sidebar-link.logout:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #ff6b6b;
+}
+
+.sidebar-link.logout i {
+    color: #ffcccc;
+}
+
+.sidebar-link.logout:hover i {
+    color: #ff6b6b;
+}
+
+/* ==================== OFFCANVAS PARA MÓVILES ==================== */
+.sidebar-offcanvas {
+    --bs-offcanvas-bg: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+}
+
+.offcanvas-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.offcanvas-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.offcanvas-link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    width: 100%;
+}
+
+.offcanvas-link:hover {
+    background-color: var(--sidebar-hover);
+    padding-left: 1.8rem;
+}
+
+.offcanvas-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left-color: var(--sidebar-active-border);
+    font-weight: 600;
+}
+
+.offcanvas-link i {
+    font-size: 1.3rem;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.offcanvas-link:hover i {
+    transform: scale(1.15);
+}
+
+.offcanvas-link.logout {
+    color: #ffcccc;
+    margin-top: auto;
+}
+
+.offcanvas-link.logout:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #ff6b6b;
+}
+
+.offcanvas-divider {
+    list-style: none;
+    margin: 1rem 0;
+    border: none;
+    padding: 0;
+}
+
+.offcanvas-divider::before {
+    content: '';
+    display: block;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0.7;
+}
+
+/* ==================== BOTÓN TOGGLE MÓVIL ==================== */
+#sidebarToggle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sidebar-bg-start), var(--sidebar-bg-end));
+    border: none;
+    box-shadow: 0 4px 15px rgba(12, 78, 212, 0.3);
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sidebarToggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(12, 78, 212, 0.4);
+}
+
+#sidebarToggle:active {
+    transform: scale(0.95);
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 991px) {
+    .sidebar-desktop {
+        display: none;
+    }
+
+    .offcanvas {
+        --bs-offcanvas-bg: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+    }
+
+    .offcanvas-header {
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .offcanvas-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-close-white {
+        filter: brightness(1.5);
+    }
+}
+
+@media (max-width: 576px) {
+    #sidebarToggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.1rem;
+        bottom: 1rem !important;
+        right: 1rem !important;
+        margin: 0 !important;
+    }
+
+    .offcanvas-link {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .offcanvas-link:hover {
+        padding-left: 1.5rem;
+    }
+
+    .offcanvas-link i {
+        font-size: 1.2rem;
+    }
+
+    .sidebar-header {
+        padding: 1.5rem 1.2rem;
+    }
+
+    .sidebar-header h5 {
+        font-size: 1.1rem;
+    }
+}
+
+/* ==================== ANIMACIONES ==================== */
+@keyframes slideInSidebar {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sidebar-desktop {
+    animation: slideInSidebar 0.5s ease-out;
+}
+
+.sidebar-link {
+    animation: slideInSidebar 0.5s ease-out forwards;
+}
+
+.sidebar-link:nth-child(1) { animation-delay: 0.1s; }
+.sidebar-link:nth-child(2) { animation-delay: 0.15s; }
+.sidebar-link:nth-child(3) { animation-delay: 0.2s; }
+.sidebar-link:nth-child(4) { animation-delay: 0.25s; }
+.sidebar-link:nth-child(5) { animation-delay: 0.3s; }
+
+/* ==================== ACCESIBILIDAD ==================== */
+.sidebar-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.offcanvas-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* ==================== SOPORTE PARA SISTEMA OSCURO ==================== */
+@media (prefers-color-scheme: dark) {
+    .sidebar-desktop {
+        background: linear-gradient(180deg, #0a3fb0 0%, #082b7f 100%);
+    }
+}
+
+/* ==================== TRANSICIÓN SUAVE ENTRE PÁGINAS ==================== */
+.sidebar-content {
+    transition: opacity 0.3s ease;
+}
+
+body.page-transition .sidebar-content {
+    opacity: 0.8;
+}
