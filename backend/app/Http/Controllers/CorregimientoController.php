@@ -5,7 +5,17 @@ use Illuminate\Http\Request;
 
 class CorregimientoController extends Controller {
     public function index() {
-        return response()->json(Corregimiento::all());
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '512M');
+
+        $corregimientos = Corregimiento::select(
+            'codigo_corregimiento', 
+            'codigo_distrito', 
+            'nombre_corregimiento',
+            'codigo_provincia'
+        )->get();
+        
+        return response()->json($corregimientos);
     }
     public function show($id) {
         $corregimiento = Corregimiento::find($id);

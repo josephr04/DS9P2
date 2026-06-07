@@ -59,6 +59,7 @@
             android:tint="@color/text_secondary"/>
         <EditText
             android:id="@+id/etUsername"
+            android:maxLength="30"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -94,6 +95,7 @@
             android:tint="@color/text_secondary"/>
         <EditText
             android:id="@+id/etPassword"
+            android:maxLength="230"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

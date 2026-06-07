@@ -7,6 +7,6 @@ class Usuario extends Model {
     protected $table = 'usuarios';
     protected $primaryKey = 'idUsuario';
     protected $fillable = ['rolUsuario', 'nombreUsuario', 'contrasen', 'correo'];
-    protected $hidden = ['contrasen'];
+    // protected $hidden = ['contrasen'];
     public $timestamps = false;
 }
