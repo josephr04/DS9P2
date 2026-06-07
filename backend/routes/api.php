@@ -1,0 +1,27 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\DistritoController;
+use App\Http\Controllers\CorregimientoController;
+use App\Http\Controllers\EstadoCivilController;
+use App\Http\Controllers\RangoAcademicoController;
+use App\Http\Controllers\TipoSangreController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\PostulanteController;
+use App\Http\Controllers\DocumentoPostulanteController;
+use App\Http\Controllers\GradoAcademicoDocumentoController;
+use App\Http\Controllers\InstitucionController;
+use App\Http\Controllers\RutaDocumentoController;
+
+Route::apiResource('provincias', ProvinciaController::class);
+Route::apiResource('distritos', DistritoController::class);
+Route::apiResource('corregimientos', CorregimientoController::class);
+Route::apiResource('estados-civiles', EstadoCivilController::class);
+Route::apiResource('rangos-academicos', RangoAcademicoController::class);
+Route::apiResource('tipos-sangre', TipoSangreController::class);
+Route::apiResource('usuarios', UsuarioController::class);
+Route::apiResource('postulantes', PostulanteController::class);
+Route::apiResource('documentos-postulante', DocumentoPostulanteController::class);
+Route::apiResource('grados-academicos', GradoAcademicoDocumentoController::class);
+Route::apiResource('instituciones', InstitucionController::class);
+Route::apiResource('rutas-documento', RutaDocumentoController::class);
