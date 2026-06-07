@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -334,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // RUTA DEL CONTROLADOR
-    const controllerUrl = '../controller/loginController.php'; 
+    const controllerUrl = '../../controller/loginController.php'; 
 
     // 2. Enviar LOGIN mediante AJAX
     const loginForm = document.getElementById('login-form');

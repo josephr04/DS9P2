@@ -1,185 +1,131 @@
 <?php
-session_start();
+// 1. Inicializamos el sistema de sesiones en el servidor
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
+// 2. Forzamos a que la respuesta del script sea estrictamente JSON en formato UTF-8
+header('Content-Type: application/json; charset=utf-8');
 
-header('Content-Type: application/json');
+// 3. Importamos tu archivo de conexión
+require_once '../config/conexion.php';
 
-try {
-    $configPath = __DIR__ . '/../config/conexion.php';
-
-    if (!file_exists($configPath)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Error de configuración: No se encontró conexion.php en ' . $configPath
-        ]);
-        exit;
-    }
-
-    require_once $configPath;
+// 4. Evaluamos que la petición sea estrictamente por POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $_POST['action'] ?? '';
 
-    // ══════════════════════════════════════════
-    //  LOGIN
-    // ══════════════════════════════════════════
-    if ($action === 'login') {
-        $email    = trim($_POST['email']    ?? '');
-        $password = trim($_POST['password'] ?? '');
-
-        if (empty($email) || empty($password)) {
-            echo json_encode(['success' => false, 'message' => 'El correo y la contraseña son obligatorios.']);
-            exit;
-        }
-
-        $stmt = $conexion->prepare(
-            "SELECT idUsuario, nombreUsuario, correo, contrasen, rolUsuario 
-             FROM usuarios 
-             WHERE correo = ? 
-             LIMIT 1"
-        );
-        $stmt->execute([$email]);
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$usuario) {
-            echo json_encode(['success' => false, 'message' => 'Correo o contraseña incorrectos.']);
-            exit;
-        }
-
-        // Soporte para contraseñas con password_hash Y texto plano (migración gradual)
-        $passwordValida = false;
-        if (password_get_info($usuario['contrasen'])['algo'] !== null) {
-            // La contraseña está hasheada con password_hash
-            $passwordValida = password_verify($password, $usuario['contrasen']);
-        } else {
-            // Contraseña en texto plano (legacy) — comparación directa
-            $passwordValida = ($password === $usuario['contrasen']);
-
-            // Opcional: re-hashear automáticamente al hacer login exitoso
-            if ($passwordValida) {
-                $nuevoHash = password_hash($password, PASSWORD_BCRYPT);
-                $update = $conexion->prepare("UPDATE usuarios SET contrasen = ? WHERE idUsuario = ?");
-                $update->execute([$nuevoHash, $usuario['idUsuario']]);
-            }
-        }
-
-        if (!$passwordValida) {
-            echo json_encode(['success' => false, 'message' => 'Correo o contraseña incorrectos.']);
-            exit;
-        }
-
-        // Sesión
-        $_SESSION['idUsuario']     = $usuario['idUsuario'];
-        $_SESSION['nombreUsuario'] = $usuario['nombreUsuario'];
-        $_SESSION['correo']        = $usuario['correo'];
-        $_SESSION['rolUsuario']    = $usuario['rolUsuario'];
-        $_SESSION['loggedin']      = true;
-
-        // Cookies "recordarme"
-        if (!empty($_POST['remember'])) {
-            setcookie('nombreUsuario', $usuario['nombreUsuario'], time() + 86400 * 30, "/", "", false, true);
-            setcookie('correo',        $usuario['correo'],        time() + 86400 * 30, "/", "", false, true);
-        }
-
-        // Redirección según rol: 0 = admin, 1 = usuario normal
-        $redirect = ($usuario['rolUsuario'] == 0)
-            ? '../views/admin/dashboard.php'
-            : '../views/datosPersonales.php';
-
-        echo json_encode([
-            'success'  => true,
-            'message'  => 'Inicio de sesión exitoso.',
-            'redirect' => $redirect
-        ]);
+    if (!isset($conexion)) {
+        echo json_encode(['success' => false, 'message' => 'Error de configuración: Variable de conexión no disponible.']);
         exit;
     }
 
-    // ══════════════════════════════════════════
-    //  REGISTRO
-    // ══════════════════════════════════════════
-    if ($action === 'register') {
-        $username         = trim($_POST['username']         ?? '');
-        $email            = trim($_POST['email']            ?? '');
-        $password         = trim($_POST['password']         ?? '');
-        $confirm_password = trim($_POST['confirm_password'] ?? '');
+    // =========================================================================
+    // PROCESO DE INICIO DE SESIÓN (LOGIN)
+    // =========================================================================
+    if ($action === 'login') {
+        $email    = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
 
-        if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+        if (empty($email) || empty($password)) {
             echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
             exit;
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'El correo electrónico no es válido.']);
+        try {
+            $query = $conexion->prepare("SELECT idUsuario, rolUsuario, nombreUsuario, contrasen, correo FROM usuarios WHERE correo = :correo LIMIT 1");
+            $query->execute([':correo' => $email]);
+            $user = $query->fetch();
+
+            // Comparamos contraseña en texto plano (entorno de práctica)
+            if ($user && $password === $user['contrasen']) {
+
+                $_SESSION['user_id']   = $user['idUsuario'];
+                $_SESSION['username']  = $user['nombreUsuario'];
+                $_SESSION['user_role'] = $user['rolUsuario'];
+                $_SESSION['email']     = $user['correo'];
+
+                // 0 = admin → panel de administración
+                // 1 = usuario → panel de aspirante
+                $redirect = $user['rolUsuario'] == 0
+                    ? 'admin/dashboard.php'
+                    : 'dashboard.php';
+
+                echo json_encode([
+                    'success'  => true,
+                    'message'  => '¡Acceso concedido! Redirigiendo...',
+                    'redirect' => $redirect
+                ]);
+                exit;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'El correo o la contraseña son incorrectos.']);
+                exit;
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Error interno en el servidor al procesar el inicio de sesión.']);
+            exit;
+        }
+    }
+
+    // =========================================================================
+    // PROCESO DE REGISTRO DE NUEVOS USUARIOS
+    // =========================================================================
+    if ($action === 'register') {
+        $username = trim($_POST['username'] ?? '');
+        $email    = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $confirm  = $_POST['confirm_password'] ?? '';
+
+        if (empty($username) || empty($email) || empty($password) || empty($confirm)) {
+            echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
             exit;
         }
 
-        if ($password !== $confirm_password) {
+        if ($password !== $confirm) {
             echo json_encode(['success' => false, 'message' => 'Las contraseñas no coinciden.']);
             exit;
         }
 
         if (strlen($password) < 6) {
-            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 6 caracteres.']);
+            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener mínimo 6 caracteres.']);
             exit;
         }
 
-        // Verificar correo duplicado
-        $stmt = $conexion->prepare("SELECT idUsuario FROM usuarios WHERE correo = ? LIMIT 1");
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) {
-            echo json_encode(['success' => false, 'message' => 'El correo ya está registrado.']);
+        try {
+            // Verificamos que el correo no esté ya registrado
+            $checkEmail = $conexion->prepare("SELECT idUsuario FROM usuarios WHERE correo = :correo LIMIT 1");
+            $checkEmail->execute([':correo' => $email]);
+            if ($checkEmail->fetch()) {
+                echo json_encode(['success' => false, 'message' => 'El correo electrónico ya está registrado.']);
+                exit;
+            }
+
+            // Todo usuario nuevo entra como rol 1 (usuario normal)
+            // Para hacer admin a alguien, cambia manualmente a 0 en phpMyAdmin
+            $insert = $conexion->prepare("INSERT INTO usuarios (rolUsuario, nombreUsuario, contrasen, correo) VALUES (:rol, :username, :password, :correo)");
+            $result = $insert->execute([
+                ':rol'      => 1,
+                ':username' => $username,
+                ':password' => $password,
+                ':correo'   => $email
+            ]);
+
+            if ($result) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Registro exitoso. Ya puedes iniciar sesión.'
+                ]);
+                exit;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'No se pudo completar el registro en la base de datos.']);
+                exit;
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Error al registrar los datos: ' . $e->getMessage()]);
             exit;
         }
-
-        // Verificar username duplicado
-        $stmt = $conexion->prepare("SELECT idUsuario FROM usuarios WHERE nombreUsuario = ? LIMIT 1");
-        $stmt->execute([$username]);
-        if ($stmt->fetch()) {
-            echo json_encode(['success' => false, 'message' => 'El nombre de usuario ya existe.']);
-            exit;
-        }
-
-        // Guardar con hash seguro
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-        $stmt = $conexion->prepare(
-            "INSERT INTO usuarios (nombreUsuario, correo, contrasen, rolUsuario) VALUES (?, ?, ?, 1)"
-        );
-        $stmt->execute([$username, $email, $hashedPassword]);
-        
-        // Obtener el ID del usuario recién creado
-        $nuevoIdUsuario = $conexion->lastInsertId();
-
-        // Iniciar sesión automáticamente
-        $_SESSION['idUsuario']     = $nuevoIdUsuario;
-        $_SESSION['nombreUsuario'] = $username;
-        $_SESSION['correo']        = $email;
-        $_SESSION['rolUsuario']    = 1;
-        $_SESSION['loggedin']      = true;
-
-        // Redirigir a datos personales para completar el perfil
-        echo json_encode([
-            'success'  => true,
-            'message'  => 'Registro exitoso. Completa tu perfil.',
-            'redirect' => '../views/user/datosPersonales.php'
-        ]);
-        exit;
     }
-
-    echo json_encode(['success' => false, 'message' => 'Acción no válida.']);
-    exit;
-
-} catch (PDOException $e) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error en la base de datos: ' . $e->getMessage()
-    ]);
-    exit;
-} catch (Throwable $e) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error inesperado: ' . $e->getMessage()
-    ]);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Método de acceso no autorizado.']);
     exit;
 }

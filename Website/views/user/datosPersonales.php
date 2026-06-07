@@ -1,3 +1,29 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verificar inactividad (5 minutos)
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactivo = time() - $_SESSION['ultimo_acceso'];
+    if ($inactivo > 300) {
+        session_destroy();
+        header('Location: login.php');
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
+// Verificar si está logueado
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$userId = $_SESSION['user_id'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -412,19 +438,6 @@
                                 <label class="form-label">Provincia <span style="color:#dc3545">*</span></label>
                                 <select class="form-select" name="provincia" id="provincia" required>
                                     <option value="" disabled selected>Seleccione...</option>
-                                    <option>Bocas del Toro</option>
-                                    <option>Chiriquí</option>
-                                    <option>Coclé</option>
-                                    <option>Colón</option>
-                                    <option>Darién</option>
-                                    <option>Herrera</option>
-                                    <option>Los Santos</option>
-                                    <option>Panamá</option>
-                                    <option>Panamá Oeste</option>
-                                    <option>Veraguas</option>
-                                    <option>Guna Yala</option>
-                                    <option>Emberá</option>
-                                    <option>Ngäbe-Buglé</option>
                                 </select>
                             </div>
                             <div class="col-md-4">

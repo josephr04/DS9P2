@@ -3,7 +3,7 @@
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
-$db_name = 'ps2gestiongeneral';
+$db_name = 'p2gestiongeneral';
 
 try {
     // Crear conexión PDO
