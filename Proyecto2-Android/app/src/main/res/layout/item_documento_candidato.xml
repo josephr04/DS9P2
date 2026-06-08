@@ -1,77 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layoutDocumento"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:padding="12dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground">
-
-    <ImageView
-        android:id="@+id/ivDocumentoIcono"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_document"
-        app:tint="@color/primary" />
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/surface">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="12dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvDocumentoNombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Documento.pdf"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+        <!-- Ícono PDF -->
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_document"
+            app:tint="@color/primary" />
 
+        <!-- Info -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
 
             <TextView
-                android:id="@+id/tvDocumentoFecha"
+                android:id="@+id/tvDocumentoNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Oct 12, 2023"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" • "
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
 
-            <TextView
-                android:id="@+id/tvDocumentoTamaño"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.4 MB"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
+                <TextView
+                    android:id="@+id/tvDocumentoTipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvDocumentoFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- Botones -->
+        <ImageView
+            android:id="@+id/btnVerDocumento"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_eye"
+            android:layout_marginEnd="10dp"
+            app:tint="@color/text_secondary"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/btnDescargarDocumento"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_download"
+            android:layout_marginEnd="10dp"
+            app:tint="@color/primary"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/btnEliminarDocumento"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_delete"
+            app:tint="#E53935"
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/btnDescargarDocumento"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_download"
-        app:tint="@color/primary"
-        android:clickable="true"
-        android:focusable="true" />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

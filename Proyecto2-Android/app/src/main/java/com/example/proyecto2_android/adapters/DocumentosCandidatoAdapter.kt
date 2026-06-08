@@ -17,7 +17,7 @@ class DocumentosCandidatoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_documento_candidato, parent, false)
+            .inflate(R.layout.item_documento, parent, false)
         return ViewHolder(view)
     }
 
@@ -32,7 +32,7 @@ class DocumentosCandidatoAdapter(
         private val ivIcono: ImageView = itemView.findViewById(R.id.ivDocumentoIcono)
         private val tvNombre: TextView = itemView.findViewById(R.id.tvDocumentoNombre)
         private val tvFecha: TextView = itemView.findViewById(R.id.tvDocumentoFecha)
-        private val tvTamaño: TextView = itemView.findViewById(R.id.tvDocumentoTamaño)
+        private val tvTamaño: TextView = itemView.findViewById(R.id.tvDocumentoTamano)
         private val btnDescargar: ImageView = itemView.findViewById(R.id.btnDescargarDocumento)
         private val layoutDocumento: LinearLayout = itemView.findViewById(R.id.layoutDocumento)
 

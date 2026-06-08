@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="CareerPort"
+                    android:text="NewWays"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Document Management"
+                android:text="Mis Documentos"
                 android:textColor="@color/text_primary"
                 android:textSize="26sp"
                 android:textStyle="bold"
@@ -117,7 +117,7 @@
                     <!-- Document Title -->
                     <TextView
                         style="@style/FieldLabel"
-                        android:text="Document Title *" />
+                        android:text="Título*" />
                     <EditText
                         android:id="@+id/etTituloDocumento"
                         style="@style/InputField"
@@ -127,7 +127,7 @@
                     <!-- Type -->
                     <TextView
                         style="@style/FieldLabel"
-                        android:text="Type *" />
+                        android:text="Grado Académico" />
                     <Spinner
                         android:id="@+id/spinnerTipo"
                         style="@style/SpinnerField" />

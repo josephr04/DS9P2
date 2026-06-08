@@ -28,4 +28,8 @@ class DocumentoPostulanteController extends Controller {
         $doc->delete();
         return response()->json(['mensaje' => 'Eliminado correctamente']);
     }
+    public function porUsuario($idPostulante) {
+        $docs = DocumentoPostulante::where('idPostulante', $idPostulante)->get();
+        return response()->json($docs);
+    }
 }

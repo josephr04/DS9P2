@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 
 class InstitucionController extends Controller {
     public function index() {
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '512M');
+
         return response()->json(Institucion::all());
     }
     public function show($id) {

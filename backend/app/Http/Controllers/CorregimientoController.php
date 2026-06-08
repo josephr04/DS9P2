@@ -14,9 +14,21 @@ class CorregimientoController extends Controller {
             'nombre_corregimiento',
             'codigo_provincia'
         )->get();
+
+        return response()->json($corregimientos);
+    }
+    // NUEVO: filtrar por distrito
+    public function porDistrito($codigo) {
+        $corregimientos = Corregimiento::select(
+            'codigo_corregimiento', 
+            'codigo_distrito', 
+            'nombre_corregimiento',
+            'codigo_provincia'
+        )->where('codigo_distrito', $codigo)->get();
         
         return response()->json($corregimientos);
     }
+
     public function show($id) {
         $corregimiento = Corregimiento::find($id);
         if (!$corregimiento) return response()->json(['mensaje' => 'No encontrado'], 404);
