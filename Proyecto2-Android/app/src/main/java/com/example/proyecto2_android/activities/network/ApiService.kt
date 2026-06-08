@@ -102,4 +102,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Body body: Map<String, String>
     ): Response<Map<String, String>>
+
+    @PUT("usuarios/{id}/cambiar-correo")
+    suspend fun cambiarCorreo(
+        @Path("id") id: Int,
+        @Body body: Map<String, String>
+    ): Response<Map<String, String>>
 }
