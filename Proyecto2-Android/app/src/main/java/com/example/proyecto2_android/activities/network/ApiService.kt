@@ -96,4 +96,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Body body: CambiarContrasenaRequest
     ): Response<Map<String, String>>
+
+    @PUT("usuarios/{id}/cambiar-usuario")
+    suspend fun cambiarUsuario(
+        @Path("id") id: Int,
+        @Body body: Map<String, String>
+    ): Response<Map<String, String>>
 }
