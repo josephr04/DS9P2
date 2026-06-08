@@ -108,4 +108,21 @@ interface ApiService {
         @Path("id") id: Int,
         @Body body: Map<String, String>
     ): Response<Map<String, String>>
+
+    @POST("login")
+    suspend fun login(
+        @Body credentials: Map<String, String>
+    ): Response<Map<String, Any>>
+
+    @GET("dashboard/stats")
+    suspend fun getDashboardStats(): Response<Map<String, Any>>
+
+    @GET("postulantes/{id}")
+    suspend fun getPostulantePorId(@Path("id") id: Int): Response<Map<String, Any>>
+
+    @GET("documentos-postulante/por-postulante/{id}")
+    suspend fun getDocumentosPorPostulante(@Path("id") id: Int): Response<List<DocumentoPostulante>>
+
+    @GET("corregimientos/codigo/{codigo}")
+    suspend fun getCorregimientoPorCodigo(@Path("codigo") codigo: String): Response<Corregimiento>
 }

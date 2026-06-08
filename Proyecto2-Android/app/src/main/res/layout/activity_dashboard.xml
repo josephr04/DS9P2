@@ -127,7 +127,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Applicants"
+                            android:text="Total Postulantes"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
@@ -180,7 +180,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Documents"
+                            android:text="Total Documentos"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
@@ -196,7 +196,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Postulantes Hoy -->
+            <!-- Postulantes Listos -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,14 +215,14 @@
                     <FrameLayout
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@drawable/bg_stat_icon_gray"
+                        android:background="@drawable/bg_stat_icon_purple"
                         android:layout_marginEnd="16dp">
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_today"
-                            app:tint="@color/text_secondary" />
+                            android:src="@drawable/ic_check_circle"
+                            app:tint="#8B5CF6" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -233,15 +233,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Postulantes Hoy"
+                            android:text="Postulantes Listos"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/tvPostulantesHoy"
+                            android:id="@+id/tvPostulantesListos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="86"
+                            android:text="0"
                             android:textColor="@color/text_primary"
                             android:textSize="26sp"
                             android:textStyle="bold" />
@@ -249,7 +249,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Total Vacantes -->
+            <!-- Edad Promedio -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,14 +268,14 @@
                     <FrameLayout
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@drawable/bg_stat_icon_red"
+                        android:background="@drawable/bg_stat_icon_orange"
                         android:layout_marginEnd="16dp">
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_work"
-                            app:tint="@color/error" />
+                            android:src="@drawable/ic_cake"
+                            app:tint="#F97316" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -286,15 +286,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Vacantes"
+                            android:text="Edad Promedio de Postulantes"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/tvTotalVacantes"
+                            android:id="@+id/tvEdadPromedio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12"
+                            android:text="0"
                             android:textColor="@color/text_primary"
                             android:textSize="26sp"
                             android:textStyle="bold" />
@@ -329,6 +329,17 @@
                     android:clickable="true"
                     android:focusable="true" />
             </LinearLayout>
+
+            <!-- ProgressBar de carga -->
+            <ProgressBar
+                android:id="@+id/progressBarDashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:indeterminateTint="@color/primary" />
 
             <!-- RecyclerView for recent candidates -->
             <androidx.recyclerview.widget.RecyclerView

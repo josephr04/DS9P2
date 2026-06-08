@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.proyecto2_android.R
@@ -18,12 +20,14 @@ import com.example.proyecto2_android.activities.admin.DashboardActivity
 import com.example.proyecto2_android.activities.postulante.PerfilActivity
 import com.example.proyecto2_android.activities.network.ApiService
 import com.example.proyecto2_android.activities.network.RetrofitClient
-import com.example.proyecto2_android.activities.utils.PasswordHelper
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginFragment : Fragment() {
 
     private var passwordVisible = false
+    private lateinit var progressBar: ProgressBar
+
     private val api: ApiService by lazy {
         RetrofitClient.instance.create(ApiService::class.java)
     }
@@ -40,6 +44,7 @@ class LoginFragment : Fragment() {
         val btnLogin = view.findViewById<LinearLayout>(R.id.btnLogin)
         val layoutError = view.findViewById<LinearLayout>(R.id.layoutError)
         val ivToggle = view.findViewById<ImageView>(R.id.ivTogglePassword)
+        progressBar = view.findViewById(R.id.progressBar)
 
         val watcher = object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -73,39 +78,90 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            setLoading(true)
+
             lifecycleScope.launch {
                 try {
-                    val response = api.getUsuarios()
+                    val request = mapOf(
+                        "nombre_usuario" to user,
+                        "contrasena" to pass
+                    )
+
+                    val response = api.login(request)
+
+                    setLoading(false)
+
                     if (response.isSuccessful) {
-                        val usuarios = response.body() ?: emptyList()
-                        val usuario = usuarios.find { it.nombreUsuario == user }
+                        val responseBody = response.body()
+                        val success = responseBody?.get("success") as? Boolean ?: false
 
-                        if (usuario != null && PasswordHelper.verify(pass, usuario.contrasen)) {
-                            // Agrega esto antes del startActivity
-                            val prefs = requireContext().getSharedPreferences("careerport", Context.MODE_PRIVATE)
-                            prefs.edit()
-                                .putString("correo_usuario", usuario.correo)
-                                .putInt("id_usuario", usuario.idUsuario ?: 0)
-                                .putString("nombre_usuario", usuario.nombreUsuario)
-                                .apply()
+                        if (success) {
+                            val usuarioData = responseBody?.get("usuario") as? Map<*, *>
 
-                            layoutError.visibility = View.GONE
-                            if (usuario.rolUsuario == 0) {
-                                startActivity(Intent(requireContext(), DashboardActivity::class.java))
+                            if (usuarioData != null) {
+                                val idUsuario = (usuarioData["idUsuario"] as? Number)?.toInt() ?: 0
+                                val nombreUsuario = usuarioData["nombreUsuario"] as? String ?: ""
+                                val correo = usuarioData["correo"] as? String ?: ""
+                                val rolUsuario = (usuarioData["rolUsuario"] as? Number)?.toInt() ?: 1
+
+                                // Guardar en SharedPreferences
+                                val prefs = requireContext().getSharedPreferences("careerport", Context.MODE_PRIVATE)
+                                prefs.edit()
+                                    .putInt("id_usuario", idUsuario)
+                                    .putString("nombre_usuario", nombreUsuario)
+                                    .putString("correo_usuario", correo)
+                                    .putInt("rol_usuario", rolUsuario)
+                                    .apply()
+
+                                layoutError.visibility = View.GONE
+
+                                // Navegar según el rol
+                                if (rolUsuario == 0) {
+                                    startActivity(Intent(requireContext(), DashboardActivity::class.java))
+                                } else {
+                                    startActivity(Intent(requireContext(), PerfilActivity::class.java))
+                                }
+                                requireActivity().finish()
                             } else {
-                                startActivity(Intent(requireContext(), PerfilActivity::class.java))
+                                layoutError.visibility = View.VISIBLE
+                                Toast.makeText(requireContext(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show()
                             }
-                            requireActivity().finish()
                         } else {
+                            val mensaje = responseBody?.get("mensaje") as? String ?: "Credenciales incorrectas"
                             layoutError.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
                         }
                     } else {
+                        // Error HTTP (401, 404, etc.)
+                        val errorBody = response.errorBody()?.string()
+                        val mensaje = if (!errorBody.isNullOrEmpty()) {
+                            try {
+                                val json = JSONObject(errorBody)
+                                json.getString("mensaje")
+                            } catch (e: Exception) {
+                                "Error al iniciar sesión"
+                            }
+                        } else {
+                            "Error al iniciar sesión"
+                        }
                         layoutError.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
+                    setLoading(false)
                     layoutError.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        if (::progressBar.isInitialized) {
+            progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        }
+        val btnLogin = view?.findViewById<LinearLayout>(R.id.btnLogin)
+        btnLogin?.isEnabled = !loading
+        btnLogin?.alpha = if (loading) 0.6f else 1.0f
     }
 }

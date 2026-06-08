@@ -40,7 +40,6 @@ class PostulantesAdapter(
         fun bind(candidato: Candidato, onItemClick: (Candidato) -> Unit) {
             tvNombre.text = candidato.nombre
             tvPosicion.text = candidato.posicion
-            tvFecha.text = "Applied on ${candidato.fechaAplicacion}"
             ivAvatar.setImageResource(candidato.avatarResId ?: R.drawable.ic_person)
 
             btnVerDetalle.setOnClickListener {

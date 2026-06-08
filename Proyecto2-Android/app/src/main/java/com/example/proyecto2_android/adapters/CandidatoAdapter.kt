@@ -32,7 +32,6 @@ class CandidatoAdapter(
         val candidato = items[position]
         holder.tvNombre.text   = candidato.nombre
         holder.tvPosicion.text = candidato.posicion
-        holder.tvFecha.text    = "Applied on ${candidato.fechaAplicacion}"
         holder.btnDetalle.setOnClickListener { onVerDetalle(candidato) }
     }
 

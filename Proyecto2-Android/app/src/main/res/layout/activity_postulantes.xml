@@ -273,6 +273,16 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
+            <!-- ProgressBar -->
+            <ProgressBar
+                android:id="@+id/progressBarPostulantes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:indeterminateTint="@color/primary" />
+
             <!-- Pagination (más compacta) -->
             <LinearLayout
                 android:layout_width="match_parent"

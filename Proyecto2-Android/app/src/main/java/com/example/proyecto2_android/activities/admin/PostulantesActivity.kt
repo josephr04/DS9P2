@@ -3,20 +3,27 @@ package com.example.proyecto2_android.activities.admin
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyecto2_android.R
 import com.example.proyecto2_android.activities.AjustesActivity
+import com.example.proyecto2_android.activities.network.ApiService
+import com.example.proyecto2_android.activities.network.RetrofitClient
 import com.example.proyecto2_android.adapters.PostulantesAdapter
 import com.example.proyecto2_android.models.Candidato
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.launch
 
 class PostulantesActivity : AppCompatActivity() {
 
@@ -32,11 +39,16 @@ class PostulantesActivity : AppCompatActivity() {
     private lateinit var filterPanel: MaterialCardView
     private lateinit var ivCloseFilters: ImageView
     private lateinit var ivClearSearch: ImageView
+    private lateinit var progressBar: ProgressBar
 
     private var currentPage = 1
     private val itemsPerPage = 6
     private var allPostulantes = mutableListOf<Candidato>()
     private var filteredPostulantes = mutableListOf<Candidato>()
+
+    private val api: ApiService by lazy {
+        RetrofitClient.instance.create(ApiService::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +57,7 @@ class PostulantesActivity : AppCompatActivity() {
         initViews()
         setupBottomNav()
         setupSearchAndFilters()
-        loadSampleData()
+        cargarPostulantesDesdeAPI()
         setupPagination()
     }
 
@@ -62,6 +74,7 @@ class PostulantesActivity : AppCompatActivity() {
         filterPanel = findViewById(R.id.filterPanel)
         ivCloseFilters = findViewById(R.id.ivCloseFilters)
         ivClearSearch = findViewById(R.id.ivClearSearch)
+        progressBar = findViewById(R.id.progressBarPostulantes)
     }
 
     private fun setupBottomNav() {
@@ -93,56 +106,111 @@ class PostulantesActivity : AppCompatActivity() {
     }
 
     private fun setupSearchAndFilters() {
-        // Mostrar/ocultar panel de filtros
         btnFilters.setOnClickListener {
-            if (filterPanel.visibility == android.view.View.GONE) {
-                filterPanel.visibility = android.view.View.VISIBLE
+            if (filterPanel.visibility == View.GONE) {
+                filterPanel.visibility = View.VISIBLE
             } else {
-                filterPanel.visibility = android.view.View.GONE
+                filterPanel.visibility = View.GONE
             }
         }
 
-        // Cerrar panel de filtros
         ivCloseFilters.setOnClickListener {
-            filterPanel.visibility = android.view.View.GONE
+            filterPanel.visibility = View.GONE
         }
 
-        // Limpiar búsqueda
         ivClearSearch.setOnClickListener {
             etSearch.text.clear()
             aplicarFiltros()
         }
 
-        // Aplicar filtros
         btnApplyFilter.setOnClickListener {
             aplicarFiltros()
-            filterPanel.visibility = android.view.View.GONE
+            filterPanel.visibility = View.GONE
         }
 
-        // Búsqueda en tiempo real
         etSearch.setOnEditorActionListener { _, _, _ ->
             aplicarFiltros()
             true
         }
     }
 
-    private fun loadSampleData() {
-        allPostulantes = mutableListOf(
-            Candidato("Ana García Méndez", "Senior Software Engineer", "Oct 12, 2023", R.drawable.ic_person),
-            Candidato("Marco Aurelio", "Desarrollador Fullstack", "Oct 12, 2023", R.drawable.ic_person),
-            Candidato("Lucia Rojas", "Senior Product Designer", "Oct 10, 2023", R.drawable.ic_person),
-            Candidato("Santiago Vargas", "Data Analyst", "Oct 09, 2023", R.drawable.ic_person),
-            Candidato("Elena Méndez", "Marketing Lead", "Oct 08, 2023", R.drawable.ic_person),
-            Candidato("Javier Paredes", "DevOps Engineer", "Oct 07, 2023", R.drawable.ic_person),
-            Candidato("Adriana Flores", "Technical Recruiter", "Oct 06, 2023", R.drawable.ic_person),
-            Candidato("Carlos Ruiz", "Backend Developer", "Oct 05, 2023", R.drawable.ic_person),
-            Candidato("Maria Gonzalez", "Frontend Developer", "Oct 04, 2023", R.drawable.ic_person),
-            Candidato("Fernando Diaz", "QA Engineer", "Oct 03, 2023", R.drawable.ic_person),
-            Candidato("Valentina Silva", "Product Manager", "Oct 02, 2023", R.drawable.ic_person),
-            Candidato("Andres Lopez", "Mobile Developer", "Oct 01, 2023", R.drawable.ic_person),
-            Candidato("Carolina Ruiz", "UX Researcher", "Sep 30, 2023", R.drawable.ic_person)
-        )
+    private fun cargarPostulantesDesdeAPI() {
+        progressBar.visibility = View.VISIBLE
 
+        lifecycleScope.launch {
+            try {
+                val response = api.getPostulantes()
+
+                progressBar.visibility = View.GONE
+
+                if (response.isSuccessful) {
+                    val postulantes = response.body() ?: emptyList()
+                    allPostulantes.clear()
+
+                    for (postulante in postulantes) {
+                        // Construir nombre completo correctamente
+                        val nombreCompleto = buildString {
+                            append(postulante["nombre"] as? String ?: "")
+                            val nombre2 = postulante["nombre2"] as? String
+                            if (!nombre2.isNullOrBlank()) append(" $nombre2")
+                            val apellido = postulante["apellido"] as? String
+                            if (!apellido.isNullOrBlank()) append(" $apellido")
+                            val apellido2 = postulante["apellido2"] as? String
+                            if (!apellido2.isNullOrBlank()) append(" $apellido2")
+                        }.trim()
+
+                        val nombreFinal = if (nombreCompleto.isBlank()) {
+                            "Postulante #${postulante["idPostulante"]}"
+                        } else {
+                            nombreCompleto
+                        }
+
+                        // Obtener el rango académico del campo correcto
+                        val rangoAcademico = (postulante["rangoAcademico"] as? Number)?.toInt() ?: 0
+                        val perfil = when (rangoAcademico) {
+                            1 -> "DIPLOMADO"
+                            2 -> "TECNICO"
+                            3 -> "LICENCIATURA"
+                            4 -> "POSTGRADO"
+                            5 -> "MAESTRIA"
+                            6 -> "DOCTORADO"
+                            else -> "Postulante"
+                        }
+
+                        allPostulantes.add(
+                            Candidato(
+                                nombre = nombreFinal,
+                                posicion = perfil,
+                                fecha = "",
+                                avatarResId = R.drawable.ic_person,
+                                idPostulante = (postulante["idPostulante"] as? Number)?.toInt() ?: 0,
+                                idUsuario = (postulante["idUsuario"] as? Number)?.toInt() ?: 0
+                            )
+                        )
+                    }
+
+                    filteredPostulantes = allPostulantes.toMutableList()
+                    tvTotalPostulantes.text = "${filteredPostulantes.size}"
+                    currentPage = 1
+                    updateRecyclerView()
+                } else {
+                    Toast.makeText(this@PostulantesActivity, "Error al cargar postulantes", Toast.LENGTH_SHORT).show()
+                    cargarDatosPrueba()
+                }
+            } catch (e: Exception) {
+                progressBar.visibility = View.GONE
+                Toast.makeText(this@PostulantesActivity, "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
+                cargarDatosPrueba()
+            }
+        }
+    }
+
+    private fun cargarDatosPrueba() {
+        allPostulantes = mutableListOf(
+            Candidato("Ana García Méndez", "LICENCIATURA", "", R.drawable.ic_person),
+            Candidato("Carlos Ruiz Zepeda", "MAESTRIA", "", R.drawable.ic_person),
+            Candidato("Roberto Valdez", "TECNICO", "", R.drawable.ic_person)
+        )
         filteredPostulantes = allPostulantes.toMutableList()
         tvTotalPostulantes.text = "${filteredPostulantes.size}"
         updateRecyclerView()
@@ -164,8 +232,7 @@ class PostulantesActivity : AppCompatActivity() {
         currentPage = 1
         updateRecyclerView()
 
-        // Mostrar/ocultar botón de limpiar búsqueda
-        ivClearSearch.visibility = if (query.isNotEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+        ivClearSearch.visibility = if (query.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun setupPagination() {
@@ -179,7 +246,7 @@ class PostulantesActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            val totalPages = (filteredPostulantes.size + itemsPerPage - 1) / itemsPerPage
+            val totalPages = if (filteredPostulantes.isEmpty()) 1 else (filteredPostulantes.size + itemsPerPage - 1) / itemsPerPage
             if (currentPage < totalPages) {
                 currentPage++
                 updateRecyclerView()
@@ -198,9 +265,10 @@ class PostulantesActivity : AppCompatActivity() {
 
         rvPostulantes.layoutManager = LinearLayoutManager(this)
         rvPostulantes.adapter = PostulantesAdapter(pageItems) { candidato ->
-            // Navegar al perfil completo del candidato
             val intent = Intent(this, PerfilCandidatoActivity::class.java)
-            intent.putExtra("candidato", candidato)
+            intent.putExtra("idPostulante", candidato.idPostulante)
+            intent.putExtra("idUsuario", candidato.idUsuario)
+            intent.putExtra("nombre", candidato.nombre)
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
@@ -215,7 +283,6 @@ class PostulantesActivity : AppCompatActivity() {
         btnPrevious.isEnabled = currentPage > 1
         btnNext.isEnabled = currentPage < totalPages && filteredPostulantes.isNotEmpty()
 
-        // Cambiar opacidad cuando está deshabilitado
         btnPrevious.alpha = if (btnPrevious.isEnabled) 1.0f else 0.5f
         btnNext.alpha = if (btnNext.isEnabled) 1.0f else 0.5f
     }

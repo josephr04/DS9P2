@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layoutDocumento"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
     android:padding="12dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground">
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_card_rounded"
+    android:layout_marginBottom="8dp">
 
     <ImageView
         android:id="@+id/ivDocumentoIcono"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_document"
-        app:tint="@color/primary" />
+        android:tint="@color/primary" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -29,6 +26,7 @@
             android:id="@+id/tvDocumentoNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Nombre del documento"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -37,25 +35,68 @@
             android:id="@+id/tvDocumentoFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Fecha"
             android:textColor="@color/text_secondary"
-            android:textSize="11sp"
-            android:layout_marginTop="2dp"/>
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/tvDocumentoTamano"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Tamaño"
             android:textColor="@color/text_secondary"
-            android:textSize="11sp"/>
+            android:textSize="11sp" />
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/btnVerDocumento"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_button_cancel_rounded"
+        android:paddingHorizontal="12dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_visibility"
+            android:tint="@color/primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver"
+            android:textColor="@color/primary"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/btnDescargarDocumento"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_download"
-        app:tint="@color/primary"
-        android:clickable="true"
-        android:focusable="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_button_rounded"
+        android:paddingHorizontal="12dp"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_download"
+            android:tint="@color/surface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descargar"
+            android:textColor="@color/surface"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
 
 </LinearLayout>

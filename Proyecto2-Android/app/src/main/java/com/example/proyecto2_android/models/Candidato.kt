@@ -5,6 +5,8 @@ import java.io.Serializable
 data class Candidato(
     val nombre: String,
     val posicion: String,
-    val fechaAplicacion: String,
-    val avatarResId: Int? = null
+    val fecha: String = "",
+    val avatarResId: Int? = null,
+    val idPostulante: Int = 0,
+    val idUsuario: Int = 0
 ) : Serializable
