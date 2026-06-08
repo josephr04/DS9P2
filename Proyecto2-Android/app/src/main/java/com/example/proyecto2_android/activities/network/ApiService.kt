@@ -1,5 +1,6 @@
 package com.example.proyecto2_android.activities.network
 
+import com.example.proyecto2_android.models.CambiarContrasenaRequest
 import com.example.proyecto2_android.models.Corregimiento
 import com.example.proyecto2_android.models.Distrito
 import com.example.proyecto2_android.models.DocumentoPostulante
@@ -89,4 +90,10 @@ interface ApiService {
 
     @GET("documentos-postulante/por-usuario/{id}")
     suspend fun getDocumentosPorUsuario(@Path("id") id: Int): Response<List<DocumentoPostulante>>
+
+    @POST("usuarios/{id}/cambiar-contrasena")
+    suspend fun cambiarContrasena(
+        @Path("id") id: Int,
+        @Body body: CambiarContrasenaRequest
+    ): Response<Map<String, String>>
 }

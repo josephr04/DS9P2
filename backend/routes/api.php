@@ -19,6 +19,7 @@ Route::apiResource('corregimientos', CorregimientoController::class);
 Route::apiResource('estados-civiles', EstadoCivilController::class);
 Route::apiResource('rangos-academicos', RangoAcademicoController::class);
 Route::apiResource('tipos-sangre', TipoSangreController::class);
+Route::post('usuarios/{id}/cambiar-contrasena', [UsuarioController::class, 'cambiarContrasena']);
 Route::apiResource('usuarios', UsuarioController::class);
 Route::apiResource('postulantes', PostulanteController::class);
 Route::apiResource('grados-academicos', GradoAcademicoDocumentoController::class);
