@@ -50,4 +50,9 @@ class CorregimientoController extends Controller {
         $corregimiento->delete();
         return response()->json(['mensaje' => 'Eliminado correctamente']);
     }
+    public function porCodigo($codigo) {
+        $corregimiento = Corregimiento::where('codigo_corregimiento', $codigo)->first();
+        if (!$corregimiento) return response()->json(['mensaje' => 'No encontrado'], 404);
+        return response()->json($corregimiento);
+    }
 }
