@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -45,6 +46,13 @@ class LoginFragment : Fragment() {
         val layoutError = view.findViewById<LinearLayout>(R.id.layoutError)
         val ivToggle = view.findViewById<ImageView>(R.id.ivTogglePassword)
         progressBar = view.findViewById(R.id.progressBar)
+
+        // ── NUEVO: link de olvidaste contraseña ──
+        val tvForgotPassword = view.findViewById<TextView>(R.id.tvForgotPassword)
+        tvForgotPassword.setOnClickListener {
+            startActivity(Intent(requireContext(), ForgotPasswordActivity::class.java))
+            requireActivity().overridePendingTransition(0, 0)
+        }
 
         val watcher = object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -104,7 +112,6 @@ class LoginFragment : Fragment() {
                                 val correo = usuarioData["correo"] as? String ?: ""
                                 val rolUsuario = (usuarioData["rolUsuario"] as? Number)?.toInt() ?: 1
 
-                                // Guardar en SharedPreferences
                                 val prefs = requireContext().getSharedPreferences("careerport", Context.MODE_PRIVATE)
                                 prefs.edit()
                                     .putInt("id_usuario", idUsuario)
@@ -115,7 +122,6 @@ class LoginFragment : Fragment() {
 
                                 layoutError.visibility = View.GONE
 
-                                // Navegar según el rol
                                 if (rolUsuario == 0) {
                                     startActivity(Intent(requireContext(), DashboardActivity::class.java))
                                 } else {
@@ -132,7 +138,6 @@ class LoginFragment : Fragment() {
                             Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        // Error HTTP (401, 404, etc.)
                         val errorBody = response.errorBody()?.string()
                         val mensaje = if (!errorBody.isNullOrEmpty()) {
                             try {

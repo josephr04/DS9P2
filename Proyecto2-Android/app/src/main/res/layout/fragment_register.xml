@@ -191,28 +191,4 @@
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <!-- Link a Login -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/have_account"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp"/>
-        <TextView
-            android:id="@+id/tvLoginHere"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_here"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:layout_marginStart="4dp"/>
-    </LinearLayout>
-
 </LinearLayout>

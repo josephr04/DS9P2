@@ -59,8 +59,8 @@ class CambiarUsuarioActivity : AppCompatActivity() {
                 nuevoUsuario.isEmpty() -> {
                     Toast.makeText(this, "Ingresa un nombre de usuario", Toast.LENGTH_SHORT).show()
                 }
-                nuevoUsuario.length < 6 -> {
-                    Toast.makeText(this, "El usuario debe tener mínimo 6 caracteres", Toast.LENGTH_SHORT).show()
+                nuevoUsuario.length < 5 -> {
+                    Toast.makeText(this, "El usuario debe tener mínimo 5 caracteres", Toast.LENGTH_SHORT).show()
                 }
                 nuevoUsuario.contains(" ") -> {
                     Toast.makeText(this, "El usuario no puede contener espacios", Toast.LENGTH_SHORT).show()

@@ -125,4 +125,10 @@ interface ApiService {
 
     @GET("corregimientos/codigo/{codigo}")
     suspend fun getCorregimientoPorCodigo(@Path("codigo") codigo: String): Response<Corregimiento>
+
+    @POST("usuarios/reset-contrasena")
+    suspend fun resetContrasena(
+        @Body body: Map<String, String>
+    ): Response<Map<String, Any>>
+
 }

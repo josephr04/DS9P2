@@ -75,6 +75,8 @@
         <activity
             android:name=".activities.admin.PerfilCandidatoActivity" />
 
+        <activity android:name=".activities.ForgotPasswordActivity" />
+
     </application>
 
 </manifest>

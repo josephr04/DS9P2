@@ -55,6 +55,8 @@ class PerfilActivity : AppCompatActivity() {
     private lateinit var btnEnviar: MaterialButton
     private lateinit var bottomNav: BottomNavigationView
     private var idPostulanteActual: Int = -1
+    private lateinit var progressBar: ProgressBar
+    private lateinit var scrollView: ScrollView   // referencia al ScrollView del layout
 
     // Views exclusivas de activity_mi_perfil
     private lateinit var layoutBotones: View
@@ -114,6 +116,14 @@ class PerfilActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNavPostulante)
         setupBottomNav()
 
+        // Referencias al loading/contenido
+        progressBar = findViewById(R.id.progressBar)
+        scrollView  = findViewById(R.id.scrollViewPerfil)   // ← pon este id en el ScrollView del XML
+
+        // Mostrar loading, ocultar contenido
+        progressBar.visibility = View.VISIBLE
+        scrollView.visibility  = View.GONE
+
         // Bind views del perfil
         etPrimerNombre        = findViewById(R.id.etPrimerNombre)
         etSegundoNombre       = findViewById(R.id.etSegundoNombre)
@@ -143,25 +153,26 @@ class PerfilActivity : AppCompatActivity() {
         btnGuardar            = findViewById(R.id.btnGuardar)
         btnDescartar          = findViewById(R.id.btnDescartar)
 
-        // Header nombre completo
         val tvNombre = findViewById<TextView>(R.id.tvNombreCompleto)
         val tvCorreo = findViewById<TextView>(R.id.tvCorreoPerfil)
         val nombre = "${datos["nombre"] ?: ""} ${datos["nombre2"] ?: ""} ${datos["apellido"] ?: ""} ${datos["apellido2"] ?: ""}".trim()
         tvNombre.text = nombre
         tvCorreo.text = datos["correoPostulante"]?.toString() ?: ""
 
-        // Guardar datos originales para poder descartar cambios
         datosOriginales = datos
 
-        // Cargar spinners estáticos + API y luego poblar campos
         setupSpinnersEstaticos()
         setupDatePicker()
 
         lifecycleScope.launch {
+            // Cargar datos de la API y poblar campos
             cargarDatosApiMiPerfil()
             poblarCampos(datos)
-            // Registrar listeners DESPUÉS de poblar para no disparar "hay cambios" al inicio
             registrarListenersCambios()
+
+            // Todo listo → ocultar loading, mostrar contenido
+            progressBar.visibility = View.GONE
+            scrollView.visibility  = View.VISIBLE
         }
 
         btnDescartar.setOnClickListener {
@@ -276,6 +287,7 @@ class PerfilActivity : AppCompatActivity() {
                     restaurarListenerDistrito()
                     restaurarListenerProvincia()
                     ocultarBotones()
+                    registrarListenersCambios()
                 }
             }
         }

@@ -114,6 +114,21 @@
             android:focusable="true"/>
     </LinearLayout>
 
+    <!-- Forgot password link -->
+    <TextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@color/primary"
+        android:textSize="13sp"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -146,30 +161,6 @@
             android:src="@drawable/ic_arrow_forward"
             android:tint="@color/surface"
             android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
-    <!-- Link a Register -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_account"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp"/>
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_now"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:layout_marginStart="4dp"/>
     </LinearLayout>
 
 </LinearLayout>
