@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
@@ -20,7 +18,6 @@
             android:layout_height="?attr/actionBarSize"
             android:paddingHorizontal="16dp">
 
-            <!-- Logo / Brand -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,25 +40,23 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Avatar -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end|center_vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_person"
-                    app:civ_border_color="@color/border"
-                    app:civ_border_width="1dp" />
+                <ImageView
+                    android:id="@+id/ivNotifications"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_notifications"
+                    android:layout_marginEnd="15dp"
+                    app:tint="@color/text_secondary" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,7 +71,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Page Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +88,7 @@
                 android:textSize="13sp"
                 android:layout_marginBottom="20dp" />
 
-            <!-- ===== SECCIÓN: Información Personal ===== -->
+            <!-- Información Personal -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +103,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Section Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -133,47 +126,35 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Primer Nombre -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Primer Nombre *" />
+                    <TextView style="@style/FieldLabel" android:text="Primer Nombre *" />
                     <EditText
                         android:id="@+id/etPrimerNombre"
                         style="@style/InputField"
-                        android:hint=""
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:maxLength="25" />
 
-                    <!-- Segundo Nombre -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Segundo Nombre (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Segundo Nombre (Opcional)" />
                     <EditText
                         android:id="@+id/etSegundoNombre"
                         style="@style/InputField"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:maxLength="25" />
 
-                    <!-- Primer Apellido -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Primer Apellido *" />
+                    <TextView style="@style/FieldLabel" android:text="Primer Apellido *" />
                     <EditText
                         android:id="@+id/etPrimerApellido"
                         style="@style/InputField"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:maxLength="25" />
 
-                    <!-- Segundo Apellido -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Segundo Apellido (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Segundo Apellido (Opcional)" />
                     <EditText
                         android:id="@+id/etSegundoApellido"
                         style="@style/InputField"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:maxLength="25" />
 
-                    <!-- Cédula Panameña -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Cédula Panameña *" />
+                    <TextView style="@style/FieldLabel" android:text="Cédula Panameña *" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -240,19 +221,13 @@
                             android:paddingHorizontal="8dp" />
                     </LinearLayout>
 
-                    <!-- Género -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Género *" />
+                    <TextView style="@style/FieldLabel" android:text="Género *" />
                     <Spinner
                         android:id="@+id/spinnerGenero"
                         style="@style/SpinnerField"
-                        android:prompt="@string/spinner_seleccione"/>
+                        android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Fecha de Nacimiento -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Fecha de Nacimiento *" />
+                    <TextView style="@style/FieldLabel" android:text="Fecha de Nacimiento *" />
                     <EditText
                         android:id="@+id/etFechaNacimiento"
                         style="@style/InputField"
@@ -261,28 +236,19 @@
                         android:focusable="false"
                         android:clickable="true" />
 
-                    <!-- Estado Civil -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Estado Civil *" />
+                    <TextView style="@style/FieldLabel" android:text="Estado Civil *" />
                     <Spinner
                         android:id="@+id/spinnerEstadoCivil"
                         style="@style/SpinnerField"
                         android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Tipo de Sangre -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Tipo de Sangre *" />
+                    <TextView style="@style/FieldLabel" android:text="Tipo de Sangre *" />
                     <Spinner
                         android:id="@+id/spinnerTipoSangre"
                         style="@style/SpinnerField"
                         android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Nivel Académico -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Nivel Académico *" />
+                    <TextView style="@style/FieldLabel" android:text="Nivel Académico *" />
                     <Spinner
                         android:id="@+id/spinnerNivelAcademico"
                         style="@style/SpinnerField"
@@ -291,7 +257,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== SECCIÓN: Información de Contacto ===== -->
+            <!-- Información de Contacto -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,7 +272,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Section Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -330,58 +295,48 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Teléfono Primario -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Teléfono Primario (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Teléfono Primario (Opcional)" />
                     <EditText
                         android:id="@+id/etTelefonoPrimario"
                         style="@style/InputField"
                         android:hint="000-0000"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:maxLength="8" />
 
-                    <!-- Teléfono Secundario -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Teléfono Secundario (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Teléfono Secundario (Opcional)" />
                     <EditText
                         android:id="@+id/etTelefonoSecundario"
                         style="@style/InputField"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:maxLength="8" />
 
-                    <!-- Celular Primario -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Celular Primario *" />
+                    <TextView style="@style/FieldLabel" android:text="Celular Primario *" />
                     <EditText
                         android:id="@+id/etCelularPrimario"
                         style="@style/InputField"
                         android:hint="6000-0000"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:maxLength="9" />
 
-                    <!-- Celular Secundario -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Celular Secundario (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Celular Secundario (Opcional)" />
                     <EditText
                         android:id="@+id/etCelularSecundario"
                         style="@style/InputField"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:maxLength="9" />
 
-                    <!-- Correo Electrónico -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Correo Electrónico *" />
+                    <TextView style="@style/FieldLabel" android:text="Correo Electrónico *" />
                     <EditText
                         android:id="@+id/etCorreo"
                         style="@style/InputField"
                         android:hint="usuario@ejemplo.com"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:maxLength="50" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== SECCIÓN: Dirección Residencial ===== -->
+            <!-- Dirección Residencial -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -396,7 +351,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Section Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -420,64 +374,46 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Provincia -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Provincia *" />
+                    <TextView style="@style/FieldLabel" android:text="Provincia *" />
                     <Spinner
                         android:id="@+id/spinnerProvincia"
                         style="@style/SpinnerField"
                         android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Distrito -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Distrito *" />
+                    <TextView style="@style/FieldLabel" android:text="Distrito *" />
                     <Spinner
                         android:id="@+id/spinnerDistrito"
                         style="@style/SpinnerField"
                         android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Corregimiento -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Corregimiento *" />
+                    <TextView style="@style/FieldLabel" android:text="Corregimiento *" />
                     <Spinner
                         android:id="@+id/spinnerCorregimiento"
                         style="@style/SpinnerField"
                         android:prompt="@string/spinner_seleccione" />
 
-                    <!-- Urbanización/Barriada -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Urbanización/Barriada *" />
+                    <TextView style="@style/FieldLabel" android:text="Urbanización/Barriada *" />
                     <EditText
                         android:id="@+id/etUrbanizacion"
                         style="@style/InputField"
-                        android:inputType="textPostalAddress" />
+                        android:inputType="textPostalAddress"
+                        android:maxLength="45" />
 
-                    <!-- Calle -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Calle *" />
+                    <TextView style="@style/FieldLabel" android:text="Calle *" />
                     <EditText
                         android:id="@+id/etCalle"
                         style="@style/InputField"
-                        android:inputType="textPostalAddress" />
+                        android:inputType="textPostalAddress"
+                        android:maxLength="45" />
 
-                    <!-- Casa/Edificio -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Casa/Edificio # *" />
+                    <TextView style="@style/FieldLabel" android:text="Casa/Edificio # *" />
                     <EditText
                         android:id="@+id/etCasaEdificio"
                         style="@style/InputField"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:maxLength="25" />
 
-                    <!-- Detalles Adicionales -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Detalles Adicionales (Opcional)" />
+                    <TextView style="@style/FieldLabel" android:text="Detalles Adicionales (Opcional)" />
                     <EditText
                         android:id="@+id/etDetallesAdicionales"
                         android:layout_width="match_parent"
@@ -492,12 +428,13 @@
                         android:padding="12dp"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:maxLength="255" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== SECCIÓN: Aplicación Laboral ===== -->
+            <!-- Aplicación Laboral -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -512,7 +449,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Section Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -536,10 +472,7 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Vacante -->
-                    <TextView
-                        style="@style/FieldLabel"
-                        android:text="Vacante a la que aplica *" />
+                    <TextView style="@style/FieldLabel" android:text="Vacante a la que aplica *" />
                     <Spinner
                         android:id="@+id/spinnerVacante"
                         style="@style/SpinnerField"
@@ -548,7 +481,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Botón Enviar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEnviarSolicitud"
                 android:layout_width="match_parent"
@@ -562,7 +494,6 @@
                 app:cornerRadius="10dp"
                 app:elevation="2dp" />
 
-            <!-- Footer: datos protegidos -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -588,7 +519,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavPostulante"
         android:layout_width="match_parent"

@@ -8,7 +8,6 @@
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
@@ -20,7 +19,6 @@
             android:layout_height="?attr/actionBarSize"
             android:paddingHorizontal="16dp">
 
-            <!-- Logo / Brand -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +41,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Bell icon -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,8 +51,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:src="@drawable/ic_notifications"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_marginEnd="15dp"
                     app:tint="@color/text_secondary" />
             </LinearLayout>
 

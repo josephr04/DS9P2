@@ -113,7 +113,8 @@
                         android:hint="Ingresa tu contraseña actual"
                         android:paddingStart="12dp"
                         android:textSize="14sp"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:maxLength="230"/>
 
                     <ImageView
                         android:id="@+id/ivToggleActual"
@@ -160,7 +161,8 @@
                         android:hint="Ingresa tu nueva contraseña"
                         android:paddingStart="12dp"
                         android:textSize="14sp"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:maxLength="230"/>
 
                     <ImageView
                         android:id="@+id/ivToggleNueva"
@@ -207,7 +209,8 @@
                         android:hint="Confirma tu nueva contraseña"
                         android:paddingStart="12dp"
                         android:textSize="14sp"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:maxLength="230"/>
 
                     <ImageView
                         android:id="@+id/ivToggleConfirmar"

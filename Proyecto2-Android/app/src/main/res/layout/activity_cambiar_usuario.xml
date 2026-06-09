@@ -144,7 +144,8 @@
                         android:hint="Ingresa tu nuevo usuario"
                         android:paddingStart="12dp"
                         android:textSize="14sp"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLength="30"/>
                 </LinearLayout>
 
                 <!-- Requisitos -->
@@ -182,7 +183,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mínimo 6 caracteres"
+                            android:text="Mínimo 5 caracteres"
                             android:textSize="13sp"
                             android:textColor="@color/text_secondary"
                             android:layout_marginStart="8dp"/>
