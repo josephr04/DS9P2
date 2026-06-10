@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // 0 = admin → panel de administración
                 // 1 = usuario → panel de aspirante
                 $redirect = $user['rolUsuario'] == 0
-                    ? 'admin/dashboard.php'
+                    ? '../admin/dashboard.php'  // Guía al administrador hacia views/admin/
                     : 'dashboard.php';
 
                 echo json_encode([
