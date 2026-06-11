@@ -215,7 +215,7 @@ try {
 
                 <p class="required-note"><span>*</span> Campos obligatorios</p>
 
-                <form method="POST" action="">
+                <form id="formPostulante">
 
                     <div class="form-section">
                         <div class="section-title">
@@ -255,8 +255,8 @@ try {
                                 <label class="form-label">Género <span style="color:#dc3545">*</span></label>
                                 <select class="form-select" name="genero" required>
                                     <option value="" disabled selected>Seleccione...</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Femenino</option>
+                                    <option value="1">Masculino</option>
+                                    <option value="2">Femenino</option>
                                 </select>
                             </div>
 
@@ -369,8 +369,8 @@ try {
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">Urbanización/Barriada <span style="color:#dc3545">*</span></label>
-                                <input type="text" class="form-control" name="urbanizacion" placeholder="Ej: Altos de Panamá" required>
+                                <label class="form-label">Comunidad <span style="color:#dc3545">*</span></label>
+                                <input type="text" class="form-control" name="comunidad" placeholder="Ej: Altos de Panamá" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Calle <span style="color:#dc3545">*</span></label>
@@ -485,6 +485,76 @@ try {
                 console.error("Error al obtener los corregimientos:", error);
             }
         });
+    });
+
+    document.getElementById('formPostulante').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const btn  = form.querySelector('.btn-submit');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+        // Construir el objeto con los nombres que espera Laravel
+        const data = {
+            idUsuario:            <?php echo (int)($_SESSION['idUsuario'] ?? 0); ?>,
+            nombre:               form.primer_nombre.value.trim(),
+            nombre2:              form.segundo_nombre.value.trim(),
+            apellido:             form.primer_apellido.value.trim(),
+            apellido2:            form.segundo_apellido.value.trim(),
+            prefijo:              form.cedula_tipo.value.trim(),
+            tomo:                 form.cedula_tomo.value.trim(),
+            asiento:              form.cedula_asiento.value.trim(),
+            genero:               form.genero.value,
+            fechaNacimiento:      form.fecha_nacimiento.value,
+            estadoCivil:          form.estado_civil.value,
+            tipoSangre:           form.tipo_sangre.value,
+            rangoAcademico:       form.nivel_academico.value,
+            telefono:             form.telefono_primario.value.trim(),
+            telefono2:            form.telefono_secundario.value.trim(),
+            celular:              form.celular_primario.value.trim(),
+            celular2:             form.celular_secundario.value.trim(),
+            correoPostulante:     form.correo.value.trim(),
+            codigo_provincia:     form.provincia.value,
+            codigo_distrito:      form.distrito.value,
+            codigo_corregimiento: form.corregimiento.value,
+            comunidad:            form.comunidad.value.trim(),
+            calle:                form.calle.value.trim(),
+            casa:                 form.casa_edificio.value.trim(),
+            detalleDireccion:     form.detalles_adicionales.value.trim(),
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/postulantes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept':       'application/json',
+                    // Si usas Sanctum/token:
+                    // 'Authorization': 'Bearer ' + TOKEN,
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('✅ ' + result.mensaje);
+                // Redirigir al siguiente paso si aplica
+                // window.location.href = 'documentos.php';
+            } else {
+                // Mostrar errores de validación de Laravel
+                const errores = result.errors
+                    ? Object.values(result.errors).flat().join('\n')
+                    : result.message || 'Error desconocido';
+                alert('❌ Error:\n' + errores);
+            }
+        } catch (err) {
+            alert('❌ Error de conexión: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Solicitud';
+        }
     });
     </script>
 </body>

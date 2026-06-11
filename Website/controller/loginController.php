@@ -3,6 +3,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+define('BASE_URL', '/ds9p2/Website/views/user/');
 
 // 2. Forzamos a que la respuesta del script sea estrictamente JSON en formato UTF-8
 header('Content-Type: application/json; charset=utf-8');
@@ -38,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $query->fetch();
 
             // Comparamos contraseña en texto plano (entorno de práctica)
-            if ($user && $password === $user['contrasen']) {
-
+            if ($user && hash('sha256', $password) === $user['contrasen']) {
                 $_SESSION['user_id']   = $user['idUsuario'];
+                $_SESSION['idUsuario']    = $user['idUsuario'];
                 $_SESSION['username']  = $user['nombreUsuario'];
                 $_SESSION['user_role'] = $user['rolUsuario'];
                 $_SESSION['email']     = $user['correo'];
@@ -48,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // 0 = admin → panel de administración
                 // 1 = usuario → panel de aspirante
                 $redirect = $user['rolUsuario'] == 0
-                    ? 'admin/dashboard.php'
-                    : 'dashboard.php';
+                    ? '/ds9p2/Website/views/admin/dashboard.php'
+                    : BASE_URL . 'datosPersonales.php';
 
                 echo json_encode([
                     'success'  => true,
@@ -106,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $insert->execute([
                 ':rol'      => 1,
                 ':username' => $username,
-                ':password' => $password,
+                ':password' => hash('sha256', $password),
                 ':correo'   => $email
             ]);
 

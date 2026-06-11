@@ -30,6 +30,7 @@ Route::post('usuarios/{id}/cambiar-contrasena', [UsuarioController::class, 'camb
 Route::apiResource('usuarios', UsuarioController::class);
 
 // Postulantes
+Route::get('/postulantes/usuario/{idUsuario}', [PostulanteController::class, 'showPorUsuario']);
 Route::apiResource('postulantes', PostulanteController::class);
 Route::get('postulantes/{id}', [PostulanteController::class, 'show']);
 

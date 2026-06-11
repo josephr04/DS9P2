@@ -35,4 +35,10 @@ class PostulanteController extends Controller {
         $documentos = DocumentoPostulante::where('idPostulante', $id)->get();
         return response()->json($documentos);
     }
+
+    public function showPorUsuario($idUsuario) {
+        $postulante = Postulante::where('idUsuario', $idUsuario)->first();
+        if (!$postulante) return response()->json(['mensaje' => 'No encontrado'], 404);
+        return response()->json($postulante);
+    }
 }
