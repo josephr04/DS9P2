@@ -1,52 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header -->
-    <LinearLayout
+    <!-- Top App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@color/surface">
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="2dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CareerPort"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingHorizontal="16dp">
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_person"
-            android:background="@drawable/bg_avatar"
-            android:padding="6dp"
-            android:tint="@color/text_secondary"/>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-    <!-- Contenido scrolleable -->
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_briefcase"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="NewWays"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical">
+
+                <ImageView
+                    android:id="@+id/ivNotifications"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_notifications"
+                    android:layout_marginEnd="15dp"
+                    app:tint="@color/text_secondary" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:indeterminateTint="@color/primary"/>
+
     <ScrollView
+        android:id="@+id/scrollViewPerfil"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Título -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,15 +105,15 @@
                 android:orientation="vertical"
                 android:background="@drawable/bg_card"
                 android:padding="16dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
 
-                <!-- Avatar + Nombre -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="3dp">
 
                     <ImageView
                         android:layout_width="56dp"
@@ -93,21 +127,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:layout_marginStart="12dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical">
 
                         <TextView
                             android:id="@+id/tvNombreCompleto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ana García Méndez"
+                            android:text=""
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"/>
 
                         <TextView
+                            android:id="@+id/tvCorreoPerfil"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Postulante desde Enero 2024"
+                            android:text=""
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/tvFechaPostulacion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
                             android:textSize="12sp"
                             android:textColor="@color/text_secondary"/>
                     </LinearLayout>
@@ -144,30 +189,30 @@
                         android:layout_marginStart="8dp"/>
                 </LinearLayout>
 
-                <!-- Primer Nombre -->
+                <!-- Primer Nombre — varchar(25) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Primer Nombre *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etPrimerNombre" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="Ana" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etPrimerNombre" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="25" android:layout_marginBottom="12dp"/>
 
-                <!-- Segundo Nombre -->
+                <!-- Segundo Nombre — varchar(25) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Segundo Nombre (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etSegundoNombre" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etSegundoNombre" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="25" android:layout_marginBottom="12dp"/>
 
-                <!-- Primer Apellido -->
+                <!-- Primer Apellido — varchar(25) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Primer Apellido *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etPrimerApellido" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="Garcia" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etPrimerApellido" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="25" android:layout_marginBottom="12dp"/>
 
-                <!-- Segundo Apellido -->
+                <!-- Segundo Apellido — varchar(25) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Segundo Apellido (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etSegundoApellido" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="Méndez" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etSegundoApellido" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="25" android:layout_marginBottom="12dp"/>
 
-                <!-- Cédula -->
+                <!-- Cédula — prefijo varchar(2), tomo varchar(4), asiento varchar(5) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cédula Panameña *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="12dp">
-                    <EditText android:id="@+id/etCedulaProvincia" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="1" android:textSize="14sp" android:inputType="number"/>
+                    <EditText android:id="@+id/etCedulaProvincia" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="number" android:maxLength="2"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="48dp" android:text="-" android:gravity="center" android:paddingStart="4dp" android:paddingEnd="4dp" android:textColor="@color/text_secondary"/>
-                    <EditText android:id="@+id/etCedulaTomo" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="2" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="234" android:textSize="14sp" android:inputType="number"/>
+                    <EditText android:id="@+id/etCedulaTomo" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="2" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="number" android:maxLength="4"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="48dp" android:text="-" android:gravity="center" android:paddingStart="4dp" android:paddingEnd="4dp" android:textColor="@color/text_secondary"/>
-                    <EditText android:id="@+id/etCedulaAsiento" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="2" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="5678" android:textSize="14sp" android:inputType="number"/>
+                    <EditText android:id="@+id/etCedulaAsiento" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="2" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="number" android:maxLength="5"/>
                 </LinearLayout>
 
                 <!-- Género -->
@@ -176,7 +221,7 @@
 
                 <!-- Fecha Nacimiento -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fecha de Nacimiento *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etFechaNacimiento" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="05/15/1994" android:textSize="14sp" android:focusable="false" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etFechaNacimiento" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:focusable="false" android:layout_marginBottom="12dp"/>
 
                 <!-- Estado Civil -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Estado Civil *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
@@ -205,20 +250,23 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Información de Contacto" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary" android:layout_marginStart="8dp"/>
                 </LinearLayout>
 
+                <!-- Teléfono — varchar(8) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono Primario (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etTelefonoPrimario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="225-4321" android:textSize="14sp" android:inputType="phone" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etTelefonoPrimario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:maxLength="8" android:layout_marginBottom="12dp"/>
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono Secundario (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etTelefonoSecundario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etTelefonoSecundario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:maxLength="8" android:layout_marginBottom="12dp"/>
 
+                <!-- Celular — varchar(9) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Celular Primario *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etCelularPrimario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="6789-4321" android:textSize="14sp" android:inputType="phone" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etCelularPrimario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:maxLength="9" android:layout_marginBottom="12dp"/>
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Celular Secundario (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etCelularSecundario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etCelularSecundario" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="phone" android:maxLength="9" android:layout_marginBottom="12dp"/>
 
+                <!-- Correo — varchar(50) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Correo Electrónico *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etCorreo" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="ana.garcia@example.com" android:textSize="14sp" android:inputType="textEmailAddress" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etCorreo" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:inputType="textEmailAddress" android:maxLength="50" android:layout_marginBottom="4dp"/>
             </LinearLayout>
 
             <!-- Sección Dirección Residencial -->
@@ -244,43 +292,31 @@
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Corregimiento *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
                 <Spinner android:id="@+id/spinnerCorregimiento" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:layout_marginBottom="12dp"/>
 
+                <!-- Urbanización — varchar(45) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Urbanización/Barriada *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etUrbanizacion" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="El Cangrejo" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etUrbanizacion" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="45" android:layout_marginBottom="12dp"/>
 
+                <!-- Calle — varchar(45) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calle *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etCalle" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="Calle 52 Este" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etCalle" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="45" android:layout_marginBottom="12dp"/>
 
+                <!-- Casa — varchar(25) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Casa/Edificio # *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etCasaEdificio" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:text="PH Sky Tower, Apt 402" android:textSize="14sp" android:layout_marginBottom="12dp"/>
+                <EditText android:id="@+id/etCasaEdificio" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" android:maxLength="25" android:layout_marginBottom="12dp"/>
 
+                <!-- Detalles — text (sin límite estricto, ponemos 255 razonable) -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Detalles Adicionales (Opcional)" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <EditText android:id="@+id/etDetallesAdicionales" android:layout_width="match_parent" android:layout_height="80dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="12dp" android:hint="Ej: Detrás de la tienda X, portón azul..." android:textSize="14sp" android:gravity="top" android:inputType="textMultiLine" android:layout_marginBottom="4dp"/>
-            </LinearLayout>
-
-            <!-- Sección Aplicación Laboral -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_card"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="16dp">
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_briefcase" android:tint="@color/primary"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aplicación Laboral" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary" android:layout_marginStart="8dp"/>
-                </LinearLayout>
-
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Vacante a la que aplica *" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
-                <Spinner android:id="@+id/spinnerVacante" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etDetallesAdicionales" android:layout_width="match_parent" android:layout_height="80dp" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="12dp" android:hint="Ej: Detrás de la tienda X, portón azul..." android:textSize="14sp" android:gravity="top" android:inputType="textMultiLine" android:maxLength="255" android:layout_marginBottom="4dp"/>
             </LinearLayout>
 
             <!-- Botones -->
             <LinearLayout
+                android:id="@+id/layoutBotones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/btnDescartar"
@@ -317,7 +353,6 @@
         app:labelVisibilityMode="labeled"
         app:itemTextAppearanceActive="@style/BottomNavTextAppearance"
         app:itemTextAppearanceInactive="@style/BottomNavTextAppearance"
-        app:itemIconSize="24dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        app:itemIconSize="24dp"/>
 
 </LinearLayout>

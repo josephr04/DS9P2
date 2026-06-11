@@ -64,18 +64,11 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="4dp">
 
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/ic_calendar"
-                        app:tint="@color/text_secondary" />
-
                     <TextView
                         android:id="@+id/tvCandidatoFecha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Applied on Jan 01, 2024"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>

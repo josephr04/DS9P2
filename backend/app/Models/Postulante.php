@@ -11,7 +11,7 @@ class Postulante extends Model {
         'prefijo', 'tomo', 'asiento', 'genero', 'estadoCivil', 'usaCasada',
         'apelCasada', 'tipoSangre', 'fechaNacimiento', 'codigo_provincia',
         'codigo_distrito', 'codigo_corregimiento', 'comunidad', 'calle', 'casa',
-        'detallesDireccion', 'telefono', 'telefono2', 'celular', 'celular2', 'correoPostulante'
+        'detalleDireccion', 'telefono', 'telefono2', 'celular', 'celular2', 'correoPostulante'
     ];
     public $timestamps = false;
 }

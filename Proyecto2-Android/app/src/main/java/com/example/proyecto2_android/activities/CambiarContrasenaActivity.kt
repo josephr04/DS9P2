@@ -1,12 +1,20 @@
 package com.example.proyecto2_android.activities.postulante
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.proyecto2_android.R
+import com.example.proyecto2_android.activities.network.RetrofitClient
+import com.example.proyecto2_android.activities.network.ApiService
+import com.example.proyecto2_android.models.CambiarContrasenaRequest
+import kotlinx.coroutines.launch
 
 class CambiarContrasenaActivity : AppCompatActivity() {
 
@@ -19,15 +27,19 @@ class CambiarContrasenaActivity : AppCompatActivity() {
     private lateinit var ivToggleActual: ImageView
     private lateinit var ivToggleNueva: ImageView
     private lateinit var ivToggleConfirmar: ImageView
+    private lateinit var progressBar: ProgressBar
 
     private var contrasenaActualVisible = false
     private var nuevaContrasenaVisible = false
     private var confirmarContrasenaVisible = false
 
+    private val api: ApiService by lazy {
+        RetrofitClient.instance.create(ApiService::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cambiar_contrasena)
-
         initViews()
         setupListeners()
     }
@@ -42,64 +54,104 @@ class CambiarContrasenaActivity : AppCompatActivity() {
         ivToggleActual = findViewById(R.id.ivToggleActual)
         ivToggleNueva = findViewById(R.id.ivToggleNueva)
         ivToggleConfirmar = findViewById(R.id.ivToggleConfirmar)
+        progressBar = findViewById(R.id.progressBar)
     }
 
     private fun setupListeners() {
-        // Botón de atrás
-        btnBack.setOnClickListener {
-            finish()
-            overridePendingTransition(0, 0)
-        }
+        btnBack.setOnClickListener { finish(); overridePendingTransition(0, 0) }
+        btnCancelar.setOnClickListener { finish(); overridePendingTransition(0, 0) }
 
-        // Toggle contraseña actual
         ivToggleActual.setOnClickListener {
             contrasenaActualVisible = !contrasenaActualVisible
             togglePasswordVisibility(etContrasenaActual, ivToggleActual, contrasenaActualVisible)
         }
-
-        // Toggle nueva contraseña
         ivToggleNueva.setOnClickListener {
             nuevaContrasenaVisible = !nuevaContrasenaVisible
             togglePasswordVisibility(etNuevaContrasena, ivToggleNueva, nuevaContrasenaVisible)
         }
-
-        // Toggle confirmar contraseña
         ivToggleConfirmar.setOnClickListener {
             confirmarContrasenaVisible = !confirmarContrasenaVisible
             togglePasswordVisibility(etConfirmarContrasena, ivToggleConfirmar, confirmarContrasenaVisible)
         }
 
-        // Botón Actualizar
         btnActualizar.setOnClickListener {
             val contrasenaActual = etContrasenaActual.text.toString().trim()
             val nuevaContrasena = etNuevaContrasena.text.toString().trim()
             val confirmarContrasena = etConfirmarContrasena.text.toString().trim()
 
             when {
-                contrasenaActual.isEmpty() -> {
+                contrasenaActual.isEmpty() ->
                     Toast.makeText(this, "Ingresa tu contraseña actual", Toast.LENGTH_SHORT).show()
-                }
-                nuevaContrasena.isEmpty() -> {
+                nuevaContrasena.isEmpty() ->
                     Toast.makeText(this, "Ingresa una nueva contraseña", Toast.LENGTH_SHORT).show()
-                }
-                nuevaContrasena.length < 6 -> {
+                nuevaContrasena.length < 6 ->
                     Toast.makeText(this, "La contraseña debe tener mínimo 6 caracteres", Toast.LENGTH_SHORT).show()
-                }
-                nuevaContrasena != confirmarContrasena -> {
+                nuevaContrasena != confirmarContrasena ->
                     Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(this, "Contraseña actualizada correctamente", Toast.LENGTH_LONG).show()
-                    finish()
-                }
+                else -> cambiarContrasena(contrasenaActual, nuevaContrasena)
             }
         }
+    }
 
-        // Botón Cancelar
-        btnCancelar.setOnClickListener {
-            finish()
-            overridePendingTransition(0, 0)
+    private fun cambiarContrasena(actual: String, nueva: String) {
+        val prefs = getSharedPreferences("careerport", Context.MODE_PRIVATE)
+        val idUsuario = prefs.getInt("id_usuario", 0)
+
+        if (idUsuario == 0) {
+            Toast.makeText(this, "Error: sesión no válida", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        setLoading(true)
+
+        lifecycleScope.launch {
+            try {
+                val response = api.cambiarContrasena(
+                    idUsuario,
+                    CambiarContrasenaRequest(actual, nueva)
+                )
+
+                setLoading(false)
+
+                when (response.code()) {
+                    200 -> {
+                        Toast.makeText(
+                            this@CambiarContrasenaActivity,
+                            "Contraseña actualizada correctamente",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        finish()
+                    }
+                    401 -> {
+                        Toast.makeText(
+                            this@CambiarContrasenaActivity,
+                            "La contraseña actual es incorrecta",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                        Toast.makeText(
+                            this@CambiarContrasenaActivity,
+                            "Error al actualizar la contraseña",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                setLoading(false)
+                Toast.makeText(
+                    this@CambiarContrasenaActivity,
+                    "Error de conexión: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        btnActualizar.isEnabled = !loading
+        btnActualizar.alpha = if (loading) 0.6f else 1.0f
     }
 
     private fun togglePasswordVisibility(editText: EditText, imageView: ImageView, isVisible: Boolean) {

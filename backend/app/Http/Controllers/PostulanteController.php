@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Postulante;
 use Illuminate\Http\Request;
+use App\Models\DocumentoPostulante;
 
 class PostulanteController extends Controller {
     public function index() {
@@ -27,5 +28,11 @@ class PostulanteController extends Controller {
         if (!$postulante) return response()->json(['mensaje' => 'No encontrado'], 404);
         $postulante->delete();
         return response()->json(['mensaje' => 'Eliminado correctamente']);
+    }
+
+    // En DocumentoPostulanteController.php
+    public function getPorPostulante($id) {
+        $documentos = DocumentoPostulante::where('idPostulante', $id)->get();
+        return response()->json($documentos);
     }
 }
