@@ -88,7 +88,7 @@ $menu_items = [
 
         <ul class="sidebar-menu">
             <li class="sidebar-item">
-                <a href="logout.php" class="sidebar-link logout">
+                <a href="/ds9p2/Website/views/user/logout.php" class="sidebar-link logout">
                     <i class="fas fa-sign-out-alt me-2"></i>
                     <span>Cerrar Sesión</span>
                 </a>
@@ -133,7 +133,7 @@ $menu_items = [
             <li class="offcanvas-divider"></li>
 
             <li class="offcanvas-item">
-                <a href="logout.php"
+                <a href="/ds9p2/Website/views/user/logout.php"
                    class="offcanvas-link logout"
                    data-bs-dismiss="offcanvas">
                     <i class="fas fa-sign-out-alt me-2"></i>
