@@ -1,11 +1,17 @@
 <?php
+require_once '../../config/auth_user.php';
+
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
 $userId = $_SESSION['user_id'];
 $idUsuario = $_SESSION['idUsuario'];
 
 define('API_BASE',   'http://localhost:8000/api');
-define('UPLOAD_DIR', __DIR__ . '/uploads/documentos/');
+define('UPLOAD_DIR', dirname(__DIR__, 3) . '/uploads/documentos/');
 define('UPLOAD_URL', 'uploads/documentos/');
 define('MAX_SIZE',   10 * 1024 * 1024);
 
@@ -63,7 +69,8 @@ if (isset($_GET['download'])) {
     foreach ($rutas as $r) {
         if (!is_array($r)) continue;
         if ((int)$r['idDocumentoPostulante'] === $idDoc) {
-            $p = __DIR__ . '/' . $r['ruta'];
+            // Construir ruta absoluta correcta
+            $p = dirname(__DIR__, 3) . '/uploads/documentos/' . basename($r['ruta']);
             if (file_exists($p)) {
                 $docs = normalizeList(apiGet('/documentos-postulante/por-postulante/' . $userId));
                 $titulo = 'documento';
@@ -75,6 +82,9 @@ if (isset($_GET['download'])) {
                 header('Content-Disposition: attachment; filename="' . preg_replace('/[^a-zA-Z0-9_.-]/', '_', $titulo) . '.pdf"');
                 header('Content-Length: ' . filesize($p));
                 readfile($p); exit;
+            } else {
+                // Debug: muestra la ruta si no encuentra el archivo
+                die('Archivo no encontrado en: ' . $p);
             }
         }
     }
@@ -405,7 +415,8 @@ body{display:flex!important;flex-direction:row!important;background-color:var(--
         <?php foreach ($documentos as $doc):
           $idDoc     = (int)$doc['idDocumentoPostulante'];
           $tieneRuta = isset($rutasPorDoc[$idDoc]);
-          $archUrl   = $tieneRuta ? $rutasPorDoc[$idDoc] : '';
+          $baseUrl = 'http://localhost/DS9P2/uploads/documentos/';
+          $archUrl = $tieneRuta ? $baseUrl . basename($rutasPorDoc[$idDoc]) : '';
 
           $nombreGrado = 'Desconocido';
           foreach ($grados as $g) { if ((int)$g['idGradoEst'] === (int)$doc['idGradoEst']) { $nombreGrado = $g['nombreGradoEst']; break; } }

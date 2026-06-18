@@ -23,10 +23,12 @@ if (isset($_SESSION['ultimo_acceso'])) {
 $_SESSION['ultimo_acceso'] = time();
 
 // 3. Filtro de Rol Estricto para el Administrador
+$rol = isset($_SESSION['user_role']) ? (int)$_SESSION['user_role'] : null;
+
 // SI NO ES ROL 0 (Administrador), lo expulsamos de la zona de administración
-if ($_SESSION['user_role'] != 0) {
+if ($rol !== 0) {
     // Si es un usuario común (Rol 1), lo mandamos a su respectivo dashboard
-    if ($_SESSION['user_role'] == 1) {
+    if ($rol === 1) {
         header('Location: ../user/dashboard.php');
     } else {
         header('Location: ../user/login.php');
@@ -37,5 +39,5 @@ if ($_SESSION['user_role'] != 0) {
 // Si llegó aquí, es un Admin autenticado. Creamos sus variables seguras:
 $userId   = $_SESSION['user_id'];
 $username = $_SESSION['username'];
-$userRole = $_SESSION['user_role'];
+$userRole = $rol;
 ?>

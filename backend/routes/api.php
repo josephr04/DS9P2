@@ -50,3 +50,14 @@ Route::get('corregimientos/por-distrito/{codigo}', [CorregimientoController::cla
 
 // Dashboard
 Route::get('dashboard/stats', [DashboardController::class, 'getStats']);
+
+Route::post('/subir-pdf', function (\Illuminate\Http\Request $request) {
+    if (!$request->hasFile('archivo')) {
+        return response()->json(['error' => 'No se recibió archivo'], 400);
+    }
+    $archivo = $request->file('archivo');
+    $nombre  = $archivo->getClientOriginalName();
+    $destino = 'C:/xampp/htdocs/DS9P2/uploads/documentos';
+    $archivo->move($destino, $nombre);
+    return response()->json(['ruta' => 'uploads/documentos/' . $nombre]);
+});
