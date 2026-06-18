@@ -11,7 +11,7 @@ function is_active_admin($page) {
 $menu_items_admin = [
     ['href' => 'dashboard.php',    'icon' => 'fas fa-home',            'label' => 'Inicio',        'page' => 'dashboard'],
     ['href' => 'postulantes.php',  'icon' => 'fas fa-users',           'label' => 'Postulantes',   'page' => 'postulantes'],
-    ['href' => 'ajustes.php',      'icon' => 'fas fa-cog',             'label' => 'Ajustes',       'page' => 'ajustes'],
+    ['href' => '../ajustes/ajustes.php',      'icon' => 'fas fa-cog',             'label' => 'Ajustes',       'page' => 'ajustes'],
 ];
 ?>
 

@@ -11,8 +11,9 @@ function is_active($page) {
     return $current_page === $page ? 'active' : '';
 }
 
-// Menú centralizado — Rutas corregidas para navegación dentro de views/user/
+// Menú centralizado — solo items visibles para el usuario
 $menu_items = [
+    /* Comentado temporalmente — descomentar si se reactiva
     [
         'href'  => 'dashboard.php',
         'icon'  => 'fas fa-home',
@@ -20,28 +21,29 @@ $menu_items = [
         'page'  => 'dashboard',
     ],
     [
-        'href'  => 'postulaciones.php', 
+        'href'  => 'postulaciones.php',
         'icon'  => 'fas fa-clipboard-list',
         'label' => 'Postulaciones',
         'page'  => 'postulaciones',
     ],
+    */
     [
-        'href'  => 'documentos.php',
+        'href'  => '../user/documentos.php',
         'icon'  => 'fas fa-file-upload',
         'label' => 'Documentos',
         'page'  => 'documentos',
     ],
     [
-        'href'  => 'datosPersonales.php',
+        'href'  => '../user/datosPersonales.php',
         'icon'  => 'fas fa-user',
         'label' => 'Mi Perfil',
         'page'  => 'Mi Perfil',
     ],
     [
-        'href'  => 'login.php',
+        'href'  => '../ajustes/ajustes.php',
         'icon'  => 'fas fa-cog',
         'label' => 'Ajustes',
-        'page'  => 'setting',
+        'page'  => 'ajustes',
     ],
 ];
 ?>
